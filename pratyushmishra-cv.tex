@@ -1,13 +1,19 @@
-\documentclass[letter,10pt]{article}
-
-%A Few Useful Packages
+\documentclass[10pt]{article}
 \usepackage{array}
-\usepackage{fontspec} 					%for loading fonts
-\usepackage[top=0.5in, bottom=0.5in, left=1in, right=1in]{geometry}
-\usepackage{xunicode,xltxtra,url,parskip} 	%other packages for formatting
-\RequirePackage{color,graphicx}
+\usepackage{fontspec}
+\usepackage[top=0.5in, bottom=0.7in, left=1in, right=1in]{geometry}
+\usepackage{xunicode,xltxtra,url,parskip}
 \usepackage[usenames,dvipsnames]{xcolor}
-\usepackage{titlesec}					%custom \section
+\usepackage{titlesec}
+
+% Setup BibLaTeX
+\usepackage[maxbibnames=99,backend=biber,style=reading, entrykey=false,entryhead=false]{biblatex}
+\bibliography{bibliography/bibliography.bib}
+\DefineBibliographyStrings{english}{%
+  bibliography = {Publications},
+  references = {Publications},
+}
+
 
 %Setup hyperref package, and colours for links
 \usepackage{hyperref}
@@ -21,18 +27,14 @@
   ItalicFont    = Fontin Italic
 ]{Fontin Regular}
 
-%%%
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
 \titlespacing{\section}{0pt}{3pt}{3pt}
 
-%--------------------BEGIN DOCUMENT----------------------
 \begin{document}
 
 \pagestyle{empty} % non-numbered pages
 
-
-%--------------------TITLE-------------
 \par{\centering
 		{\Huge Pratyush Mishra
 	}\bigskip\par}
@@ -52,7 +54,7 @@
 \end{tabular}
 
 \section{Relevant Coursework}
-\begin{tabular}{R{2.5cm}p{4.5cm}R{2cm}p{6cm}}
+\begin{tabular}{R{2.5cm}p{4.5cm}R{1.5cm}p{6cm}}
 
   CS 161   & Computer Security          & CS 172   & Computability and Complexity Theory\\
   CS 170   & Algorithms                 & CS 174   & Probability and Combinatorics\\
@@ -71,7 +73,7 @@
 
   \textsc{Fall '14 --}     & \emph{Breaking Speech Recognition}\\
 
-                          &\footnotesize{
+                          &\footnotesize{%
                              Worked on reverse-engineering speech recognition
                              systems to create sound clips that do not sound
                              like human speech but are correctly recognized by
@@ -83,7 +85,7 @@
   \emph{Past}             &\\
   \textsc{Summer '15}     & \emph{Finding Smartlock Vulnerabilities}\\
 
-                          &\footnotesize{
+                          &\footnotesize{%
                              Tested various models of smartlocks for different
                              categories of vulnerabilities. Created a model of
                              security for smartlocks.
@@ -91,7 +93,7 @@
                             }\\
   \textsc{Fall '13 --'14} & \emph{Assessing Webcam LED Indicator Effectiveness}\\
 
-                          &\footnotesize{
+                          &\footnotesize{%
                              Worked on determining the effectiveness of
                              existing webcam notification methods (LED
                              indicators) in warning users that they were being
@@ -104,7 +106,7 @@
 
   \textsc{Summer '14}     & Software Development Intern, \textsc{A9.com}\\
 
-                          &\footnotesize{
+                          &\footnotesize{%
                              Worked on incorporating user feedback to generate
                              better online ad recommendations for the
                              contextual advertisement platform. The project
@@ -123,11 +125,7 @@
   Experienced   & \textsc{Java, Python, Apache Hive}\\
   GitHub        & \href{https://www.github.com/pratyush}{\texttt{github.com/pratyush}}
 \end{tabular}
-
-\section{Publications}
-\textbf{Somebody's Watching Me? Assessing the Effectiveness of Webcam Indicator Lights}\\
-\textit{R. Portnoff, L. Lee, S. Egelman, P. Mishra, D. Leung, and D. Wagner.}
-Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI
-’15), 2015, Seoul, Korea.
-
+%Section: Publications
+\nocite{*}
+\printbibliography{}
 \end{document}
