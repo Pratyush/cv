@@ -14,14 +14,13 @@
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
 \hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
 
-%FONTS
 \defaultfontfeatures{Mapping=tex-text}
 \setmainfont[
-SmallCapsFont = Fontin-SmallCaps.otf,
-BoldFont = Fontin-Bold.otf,
-ItalicFont = Fontin-Italic.otf
-]
-{Fontin.otf}
+  SmallCapsFont = Fontin SmallCaps,
+  BoldFont      = Fontin Bold,
+  ItalicFont    = Fontin Italic
+]{Fontin Regular}
+
 %%%
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \titleformat{\section}{\Large\scshape\raggedright}{}{0em}{}[\titlerule]
@@ -39,27 +38,27 @@ ItalicFont = Fontin-Italic.otf
 	}\bigskip\par}
 
 
-\textsc{E-MAIL:} \href{mailto:pratyushmishra@berkeley.edu}{pratyushmishra@berkeley.edu}
+        \textsc{E-MAIL:} \href{mailto:pratyushmishra@berkeley.edu}{pratyushmishra@berkeley.edu}
         \hfill
         \textsc{Website:} \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
-%Section: Education
-\section{Education}
-\begin{tabular}{R{2.5cm}p{11cm}}	
 
-  \textsc{Fall '12 - } & Senior, B.Sc in \textsc{Electrical Engineering and Computer Science} \\
+\section{Education}
+\begin{tabular}{R{2.5cm}p{11cm}}
+
+  \textsc{Fall '12 --} & Senior, B.Sc in \textsc{Electrical Engineering and Computer Science} \\
                        & University of California, Berkeley \\
                        & \textsc{Gpa:} \textbf{3.796}/4.000, \textbf{Honours To Date} \\
                        & Expected Graduation Date: \textbf{May 2016}\\
 \end{tabular}
 
 \section{Relevant Coursework}
-\begin{tabular}{R{2.5cm}p{4.5cm}R{2cm}p{6cm}}	
+\begin{tabular}{R{2.5cm}p{4.5cm}R{2cm}p{6cm}}
 
   CS 161   & Computer Security          & CS 172   & Computability and Complexity Theory\\
   CS 170   & Algorithms                 & CS 174   & Probability and Combinatorics\\
   CS 261   & Graduate Computer Security & CS 276   & Graduate Cryptography\\
   Math 110 & Linear Algebra             & Math 116 & Cryptography\\
-  Math 113 & Abstract Algebra           & -       & Galois Theory\\
+  Math 113 & Abstract Algebra           & ---      & Galois Theory\\
 \end{tabular}
 
 
@@ -70,7 +69,7 @@ ItalicFont = Fontin-Italic.otf
   \emph{Current}          & Research Assistant with Prof.\ David Wagner, UC Berkeley\\
 
 
-  \textsc{Fall '14 -}     & \emph{Breaking Speech Recognition}\\
+  \textsc{Fall '14 --}     & \emph{Breaking Speech Recognition}\\
 
                           &\footnotesize{
                              Worked on reverse-engineering speech recognition
@@ -81,8 +80,6 @@ ItalicFont = Fontin-Italic.otf
                              control unsuspecting users’ devices.
                             }\\
 
-
-
   \emph{Past}             &\\
   \textsc{Summer '15}     & \emph{Finding Smartlock Vulnerabilities}\\
 
@@ -90,9 +87,9 @@ ItalicFont = Fontin-Italic.otf
                              Tested various models of smartlocks for different
                              categories of vulnerabilities. Created a model of
                              security for smartlocks.
-                          
+
                             }\\
-  \textsc{Fall '13 - '14} & \emph{Assessing Webcam LED Indicator Effectiveness}\\
+  \textsc{Fall '13 --'14} & \emph{Assessing Webcam LED Indicator Effectiveness}\\
 
                           &\footnotesize{
                              Worked on determining the effectiveness of
@@ -119,14 +116,6 @@ ItalicFont = Fontin-Italic.otf
                             }
 \end{tabular}
 
-\section{Publications}
-\textbf{Somebody's Watching Me? Assessing the Effectiveness of Webcam Indicator Lights}\\
-\textit{R. Portnoff, L. Lee, S. Egelman, P. Mishra, D. Leung, and D. Wagner.}
-Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI
-’15), 2015, Seoul, Korea.
-
-
-%Section: Technical Skills
 \section{Technical Skills}
 \begin{tabular}{R{2.5cm}l}
   Basic         & \textsc{Haskell}, \textsc{SQL}, \textsc{Matlab}\\
@@ -135,13 +124,10 @@ Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI
   GitHub        & \href{https://www.github.com/pratyush}{\texttt{github.com/pratyush}}
 \end{tabular}
 
-\section{Selected Projects}
-\begin{tabular}{R{2.5cm}p{11cm}}
-  last.fm Log Analyzer &   Built an application that takes a user’s music
-                           listening habits and finds the most listened-to
-                           genres, and further uses the last.fm API to
-                           recommend more artists from those genres. Meant as a
-                           simple project to understand networking and string
-                           manipulation in Haskell. \\
-\end{tabular}
+\section{Publications}
+\textbf{Somebody's Watching Me? Assessing the Effectiveness of Webcam Indicator Lights}\\
+\textit{R. Portnoff, L. Lee, S. Egelman, P. Mishra, D. Leung, and D. Wagner.}
+Proceedings of the SIGCHI Conference on Human Factors in Computing Systems (CHI
+’15), 2015, Seoul, Korea.
+
 \end{document}
