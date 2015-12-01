@@ -3,11 +3,11 @@
 \usepackage{fontspec}
 \usepackage[top=0.5in, bottom=0.7in, left=1in, right=1in]{geometry}
 \usepackage{xunicode,xltxtra,url,parskip}
-\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{xcolor}
 \usepackage{titlesec}
 
 % Setup BibLaTeX
-\usepackage[maxbibnames=99,backend=biber,style=reading, entrykey=false,entryhead=false]{biblatex}
+\usepackage[maxbibnames= 99,backend=biber,style=reading, entrykey=false,entryhead=false]{biblatex}
 \bibliography{bibliography/bibliography.bib}
 \DefineBibliographyStrings{english}{%
   bibliography = {Publications},
@@ -35,14 +35,11 @@
 
 \pagestyle{empty} % non-numbered pages
 
-\par{\centering
-		{\Huge Pratyush Mishra
-	}\bigskip\par}
+{\centering{\Huge Pratyush Mishra}\par}
 
-
-        \textsc{E-MAIL:} \href{mailto:pratyushmishra@berkeley.edu}{pratyushmishra@berkeley.edu}
-        \hfill
-        \textsc{Website:} \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
+\textsc{E-MAIL:} \href{mailto:pratyushmishra@berkeley.edu}{pratyushmishra@berkeley.edu}
+\hfill
+\textsc{Website:} \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
 
 \section{Education}
 \begin{tabular}{R{2.5cm}p{11cm}}
@@ -118,6 +115,10 @@
                             }
 \end{tabular}
 
+
+\nocite{*}
+\printbibliography{}
+
 \section{Technical Skills}
 \begin{tabular}{R{2.5cm}l}
   Basic         & \textsc{Haskell}, \textsc{SQL}, \textsc{Matlab}\\
@@ -125,7 +126,5 @@
   Experienced   & \textsc{Java, Python, Apache Hive}\\
   GitHub        & \href{https://www.github.com/pratyush}{\texttt{github.com/pratyush}}
 \end{tabular}
-%Section: Publications
-\nocite{*}
-\printbibliography{}
+
 \end{document}
