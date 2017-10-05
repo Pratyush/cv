@@ -1,0 +1,81 @@
+\documentclass[11pt]{article}
+\usepackage{bibunits}
+\usepackage[NoDate, ManyBibs]{currvita}
+\usepackage{unicode,url,parskip}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[margin=1.25in]{geometry}
+\usepackage[urw-garamond]{mathdesign}
+
+\bibliography{pubs.bib}
+
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+\makeatletter
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \dagger \or * \else\@ctrerr\fi}}
+\makeatother
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\tolerance=600
+\begin{document}
+\setlength{\cvlabelwidth}{6.78em}
+\setlength{\cvlabelskip}{%
+0.2\baselineskip 
+}%
+\begin{cv}{}
+  \begin{center}
+    \huge
+    \textbf{Pratyush Mishra}
+  \end{center}
+
+  \href{mailto:pratyush@berkeley.edu}{pratyush@berkeley.edu}\hfill
+  \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}} 
+
+  \begin{cvlist}{Education}
+  \item[\small$08/2016$\,-\,Present] PhD, \textsc{Computer Science}\\
+    \emph{University of California, Berkeley}
+
+  \item[\small$08/2012$\,-\,$05/2016$] BSc, \textsc{Electrical Engineering \& Computer Science}\\
+    \emph{University of California, Berkeley}
+  \end{cvlist}
+  \vspace{-1em}
+  %
+  {\large\textbf{Publications}}
+
+  \emph{Conference papers}\vspace{0.5em}
+
+    \small
+    \begin{bibunit}[alpha]
+      \nocite{ChiesaGLMMM17, CarliniMVZSSWZ16, HoLMHSW16, PortnoffLEMLW15}
+    \putbib[pubs]
+    \end{bibunit}
+  %
+  \begin{cvlist}{Teaching}
+  \item[\small$01/2016$\,-\,$05/2016$] Teaching Assistant, \textsc{CS161}: Computer Security\\
+    {\small
+    Taught sections, designed homeworks, and graded examinations for the computer security class at UC Berkeley taught by Prof.~David Wagner and Prof.~Raluca Ada Popa.}
+  \end{cvlist}
+  %
+  \begin{cvlist}{Talks}
+    \small
+  \item[\small$05/2017$] \emph{``Oblivious Indices via Hardware Enclaves''}. RISE Lab Retreat.
+  \item[\small$05/2017$] \emph{``Decentralized Anonymous Micropayments''}. EUROCRYPT~2017.
+  \item[\small$04/2017$] \emph{``Decentralized Anonymous Micropayments''}. NYU Crypto Seminar.
+  \item[\small$02/2017$] \emph{``Decentralized Anonymous Micropayments''}. Rambus Inc.
+  \item[\small$09/2016$] \emph{``Decentralized Anonymous Micropayments''}. Bay Area Crypto Day.
+  \end{cvlist}
+  \footnotetext[1]{Alphabetical order.}
+  \footnotetext[2]{Equal student author contribution.}
+  %
+  \begin{cvlist}{Service}
+    \small
+  \item[\emph{External reviewer}]
+  \item[\small $2017$] \emph{15\textsuperscript{th} Theory of Cryptography Conference} (TCC~2017).
+  \item[\small $2016$] \emph{23\textsuperscript{rd} ACM Conference on Computer and Communications Security} (CCS~2016).
+  \item[\small $2016$] \emph{14\textsuperscript{th} Theory of Cryptography Conference} (TCC~2016-B).
+  \end{cvlist}
+\end{cv}
+\end{document}
