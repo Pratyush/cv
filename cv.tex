@@ -8,7 +8,6 @@
 \usepackage[margin=1.25in]{geometry}
 \usepackage[urw-garamond]{mathdesign}
 
-\bibliography{pubs.bib}
 
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
@@ -22,6 +21,8 @@
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \tolerance=600
 \begin{document}
+\nocite{*}
+\bibliographystyle{plain}
 
 \setlength{\cvlabelwidth}{6.78em}
 \setlength{\cvlabelskip}{%
@@ -48,11 +49,27 @@
   %
   {\large\textbf{Publications}}
 
-  \emph{Conference papers}\vspace{0.5em}
+  % \emph{Conference papers}\vspace{0.5em}
 
     \small
     \begin{bibunit}[alpha]
-      \nocite{ChiesaGLMMM17, CarliniMVZSSWZ16, HoLMHSW16, PortnoffLEMLW15}
+      \nocite{MishraPCCP18}
+    \putbib[pubs]
+    \end{bibunit}
+    \begin{bibunit}[alpha]
+      \nocite{ChiesaGLMMM17}
+    \putbib[pubs]
+    \end{bibunit}
+    \begin{bibunit}[alpha]
+      \nocite{CarliniMVZSSWZ16}
+    \putbib[pubs]
+    \end{bibunit}
+    \begin{bibunit}[alpha]
+      \nocite{HoLMHSW16}
+    \putbib[pubs]
+    \end{bibunit}
+    \begin{bibunit}[alpha]
+      \nocite{PortnoffLEMLW15}
     \putbib[pubs]
     \end{bibunit}
   %
@@ -64,6 +81,8 @@
   %
   \begin{cvlist}{Talks}
     \small
+    \item[\small$05/2018$] \emph{Oblix: An Efficient Oblivious Search Index}. Bay Area Crypto Day.
+    \item[\small$05/2018$] \emph{Oblix: An Efficient Oblivious Search Index}. IEEE S\&P~2018.
     \item[\small$05/2017$] \emph{Oblivious Indices via Hardware Enclaves}. RISE Lab Retreat.
     \item[\small$05/2017$] \emph{Decentralized Anonymous Micropayments}. EUROCRYPT~2017.
     \item[\small$04/2017$] \emph{Decentralized Anonymous Micropayments}. NYU Crypto Seminar.
@@ -73,14 +92,20 @@
   \footnotetext[1]{Alphabetical order.}
   \footnotetext[2]{Equal student author contribution.}
   %
+  \clearpage
   \begin{cvlist}{Service}
     \small
     \item[\emph{External reviewer}]
+    \item[\small $2018$] \emph{13\textsuperscript{th} USENIX Symposium on Operating Systems Design and Implementation} (OSDI~2018).
     \item[\small $2017$] \emph{16\textsuperscript{th} USENIX Symposium on Networked Systems Design and Implementation} (NSDI~2018).
     \item[\small $2017$] \emph{15\textsuperscript{th} Theory of Cryptography Conference} (TCC~2017).
     \item[\small $2017$] \emph{25\textsuperscript{th} Network and Distributed Systems Security Symposium} (NDSS~2018).
     \item[\small $2016$] \emph{23\textsuperscript{rd} ACM Conference on Computer and Communications Security} (CCS~2016).
     \item[\small $2016$] \emph{14\textsuperscript{th} Theory of Cryptography Conference} (TCC~2016-B).
+      % TODO: Add student adcomm service.
   \end{cvlist}
 \end{cv}
+
+\newsavebox\mytempbib
+\savebox\mytempbib{\parbox{\textwidth}{\bibliography{pubs.bib}}}
 \end{document}
