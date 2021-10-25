@@ -1,0 +1,134 @@
+\documentclass[11pt]{article}
+\usepackage[giveninits,maxnames=99, backend=bibtex, sorting=none]{biblatex}
+\usepackage[NoDate]{currvita}
+\usepackage{unicode,url,parskip}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage[compact]{titlesec}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{times}
+
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
+
+\makeatletter
+\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \dagger \or * \else\@ctrerr\fi}}
+\makeatother
+
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\bibliography{pubs.bib}
+\tolerance=600
+
+\AtEveryBibitem{%
+  \ifentrytype{inproceedings}{%
+    \clearfield{year}%
+    \clearfield{pages}%
+    \clearfield{booktitle}%
+    \clearfield{note}%
+  }{%
+  }%
+}
+\AtEveryBibitem{%
+  \ifentrytype{misc}{%
+    \clearfield{year}%
+  }{%
+  }%
+}
+\AtEveryBibitem{%
+  \ifentrytype{article}{%
+    \clearfield{pages}%
+    \clearfield{volume}%
+    \clearfield{number}%
+    \clearfield{month}%
+  }{%
+  }%
+}
+\DeclareFieldFormat{labelnumberwidth}{}
+\setlength{\biblabelsep}{2.5em}
+
+\DeclareFieldFormat
+  [article,book,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {title}{{\em #1}}
+
+\setlength{\cvlabelwidth}{5em}
+\setlength{\cvlabelskip}{%
+0.2\baselineskip
+}%
+
+
+\begin{document}
+% \bibliographystyle{plain}
+\begin{cv}{\vspace{-5em}}
+  \begin{center}
+    \huge
+    \textbf{Pratyush Mishra}
+  \end{center}
+
+  \href{mailto:pratyush@berkeley.edu}{\texttt{pratyush@berkeley.edu}}\hfill
+  \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
+
+  {\large \textbf{Education}}
+  \begin{itemize}
+    \item[] PhD, \textsc{Computer Science} (\small$08/2016$\,-\,Present)\\
+    \emph{University of California, Berkeley}
+
+  \item[] BSc, \textsc{Electrical Engineering \& Computer Science} (\small$08/2012$\,-\,$05/2016$)\\
+    \emph{University of California, Berkeley}
+  \end{itemize}
+  %
+  {\large\textbf{Papers}}
+  {
+    \small
+    \noindent
+    \nocite{BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
+    \printbibliography[title = {\small Conference publications}, type=inproceedings]
+    \nocite{ChiesaLMZ21,LehmkuhlMSP21,BuenzCLMS20,BuenzMMTV19}
+    \printbibliography[title = {\small Preprints}, type=misc]
+  }
+  \footnotetext[1]{Contribution order.}
+
+
+  {\clearpage\large\textbf{Teaching}}
+  \begin{itemize}
+    \item[] \emph{Co-Instructor, {CS294-163}: Decentralized Security (Fa~'19)}\\
+      {\small
+        Together with Prof.~Raluca Ada Popa, I designed and taught a new course on the theory and practice of \emph{systems for decentralized security}. I created hands-on tutorials for students to get experience with the latest tools in the space, and also designed and graded homework.
+      }
+    \item[] \emph{Teaching Assistant, {CS161}: Computer Security (Sp~'19, Sp~'16)}\\
+      {\small
+      I taught sections, designed homeworks, and graded exams for the undergraduate computer security class at UC Berkeley.}
+  \end{itemize}
+
+  %
+  {\large\textbf{Talks}}
+  \begin{itemize}
+    \item[] \emph{Proof-Carrying Data from Accumulation Schemes:} JHU Security Seminar, Stanford Security Seminar, zkStudyClub.
+    \item[] \emph{\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks:} RISE Lab Retreat~'20, TPMPC Workshop, USENIX Security~'20, PPML~'20.
+    \item[] \emph{$\textsc{Marlin}$: Preprocessing {zkSNARKs} with Universal and Updatable {SRS}:}. zkSummit~'19.
+    \item[] \emph{$\textsc{Zexe}$: Enabling Decntralized Private Computation:}. Stanford Blockchain Conference~'19, Bay Area Crypto Day~'19, PENCIL Workshop~'19, Zcon1, CESC~'19, Simons Institute Blockchain in Society Workshop, S\&P~20.
+
+    \item[] \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index}: Bay Area Crypto Day~'18, S\&P~18, RISE Lab Retreat~'18.
+    \item[] \emph{Decentralized Anonymous Micropayments}: 
+      EUROCRYPT~2017, NYU Crypto Seminar, Rambus Inc, Bay Area Crypto Day~'16.
+  \end{itemize}
+
+  %
+  {\large \textbf{Service}}
+  \begin{itemize}
+    \small
+    \item[] \emph{External reviewer}:
+      S\&P~2020,
+      OSDI~2018,
+      NSDI~2018,
+      TCC~2017,
+      NDSS~2018,
+      CCS~2016,
+      TCC~2016-B.
+      % TODO: Add student adcomm service.
+
+    \item[] \emph{Graduate Admissions Committee, UC Berkeley}.
+  \end{description}
+\end{cv}
+\end{document}

@@ -1,13 +1,13 @@
 \documentclass[11pt]{article}
-\usepackage{bibunits}
-\usepackage[NoDate, ManyBibs]{currvita}
+\usepackage[maxnames=99, sorting=ydnt]{biblatex}
+\usepackage[NoDate]{currvita}
 \usepackage{unicode,url,parskip}
 \usepackage{xcolor}
 \usepackage{multirow}
 \usepackage[compact]{titlesec}
 \usepackage[margin=1.25in]{geometry}
 \usepackage[urw-garamond]{mathdesign}
-
+\nocite{*}
 
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
@@ -19,16 +19,43 @@
 
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\bibliography{pubs}
 \tolerance=600
-\begin{document}
-\nocite{*}
-\bibliographystyle{plain}
 
-\setlength{\cvlabelwidth}{6.78em}
+\DeclareCiteCommand{\cvcite}
+  {\usebibmacro{prenote}}
+  {%
+    \usebibmacro{maintitle+title}{\labelnamepunct}
+    \newline\nopunct\newblock
+    \usebibmacro{author}{\labelnamepunct}\hfill
+    \newline\newblock
+    \iffieldundef{series}
+    {\printfield{howpublished}{\labelnamepunct}}
+    {}%
+    \usebibmacro{series+number}{\labelnamepunct}
+    \newline\nopunct\newblock
+    \newline
+  }
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+% Make the titles in bold
+\DeclareFieldFormat
+  [article,book,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {author}{#1}
+
+\DeclareFieldFormat
+  [article,book,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  {title}{{\em #1}}
+
+\setlength{\cvlabelwidth}{5em}
 \setlength{\cvlabelskip}{%
 0.2\baselineskip
 }%
 
+
+\begin{document}
+% \bibliographystyle{plain}
 \begin{cv}{\vspace{-5em}}
   \begin{center}
     \huge
@@ -47,40 +74,29 @@
   \end{cvlist}
   \vspace{-1em}
   %
-  {\large\textbf{Publications}}
+  {\large\textbf{Papers}}
 
-  % \emph{Conference papers}\vspace{0.5em}
-
+  {
     \small
-    \begin{bibunit}[alpha]
-      \nocite{MishraPCCP18}
-    \putbib[pubs]
-    \end{bibunit}
-    \begin{bibunit}[alpha]
-      \nocite{ChiesaGLMMM17}
-    \putbib[pubs]
-    \end{bibunit}
-    \begin{bibunit}[alpha]
-      \nocite{CarliniMVZSSWZ16}
-    \putbib[pubs]
-    \end{bibunit}
-    \begin{bibunit}[alpha]
-      \nocite{HoLMHSW16}
-    \putbib[pubs]
-    \end{bibunit}
-    \begin{bibunit}[alpha]
-      \nocite{PortnoffLEMLW15}
-    \putbib[pubs]
-    \end{bibunit}
-  %
+    \noindent
+    \cvcite{BoweCGMMW18, MishraPCCP18, ChiesaGLMMM17, CarliniMVZSSWZ16, HoLMHSW16, PortnoffLEMLW15}
+    \vspace{-2em}
+  }
+  % \footnotetext[1]{Alphabetical order.}
+  % \footnotetext[2]{Equal student author contribution.}
+
   \begin{cvlist}{Teaching}
-  \item[\small$01/2016$\,-\,$05/2016$] Teaching Assistant, \textsc{CS161}: Computer Security\\
+  \item[Spring $2019$] Teaching Assistant, \textsc{CS161}: Computer Security\\
+    {\small
+    Taught sections, designed homeworks, and graded exams for the computer security class at UC Berkeley taught by Prof.~Raluca Ada Popa and Prof.~Nicholas Weaver.}
+  \item[Spring $2016$] Teaching Assistant, \textsc{CS161}: Computer Security\\
     {\small
     Taught sections, designed homeworks, and graded exams for the computer security class at UC Berkeley taught by Prof.~Raluca Ada Popa and Prof.~David Wagner.}
   \end{cvlist}
   %
   \begin{cvlist}{Talks}
     \small
+    \item[\small$01/2019$] \emph{ZEXE: Enabling Decntralized Private Computation}. Stanford Blockchain Conference 2019.
     \item[\small$05/2018$] \emph{Oblix: An Efficient Oblivious Search Index}. Bay Area Crypto Day.
     \item[\small$05/2018$] \emph{Oblix: An Efficient Oblivious Search Index}. IEEE S\&P~2018.
     \item[\small$05/2017$] \emph{Oblivious Indices via Hardware Enclaves}. RISE Lab Retreat.
@@ -89,10 +105,7 @@
     \item[\small$02/2017$] \emph{Decentralized Anonymous Micropayments}. Rambus Inc.
     \item[\small$09/2016$] \emph{Decentralized Anonymous Micropayments}. Bay Area Crypto Day.
   \end{cvlist}
-  \footnotetext[1]{Alphabetical order.}
-  \footnotetext[2]{Equal student author contribution.}
   %
-  \clearpage
   \begin{cvlist}{Service}
     \small
     \item[\emph{External reviewer}]
@@ -105,7 +118,4 @@
       % TODO: Add student adcomm service.
   \end{cvlist}
 \end{cv}
-
-\newsavebox\mytempbib
-\savebox\mytempbib{\parbox{\textwidth}{\bibliography{pubs.bib}}}
 \end{document}
