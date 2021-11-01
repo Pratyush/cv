@@ -1,31 +1,32 @@
 \documentclass[11pt]{article}
-\usepackage[giveninits,maxnames=99, backend=bibtex, sorting=none]{biblatex}
+\usepackage[
+  maxnames=99, 
+  backend=biber, 
+  sorting=none,
+  block=par,
+]{biblatex}
 \usepackage[NoDate]{currvita}
 \usepackage{unicode,url,parskip}
 \usepackage{xcolor}
-\usepackage{multirow}
 \usepackage[compact]{titlesec}
 \usepackage[margin=1.25in]{geometry}
 \usepackage{times}
+\usepackage{xpatch}
+\usepackage{microtype}
+\usepackage{enumitem}
 
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
 \hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, linkcolor=linkcolour}
 
-\makeatletter
-\def\@fnsymbol#1{\ensuremath{\ifcase#1\or \dagger \or * \else\@ctrerr\fi}}
-\makeatother
-
-
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \bibliography{pubs.bib}
 \tolerance=600
-
+\renewbibmacro{in:}{}
+\renewbibmacro*{byauthor}{\printnames[byauthor]{author}}
 \AtEveryBibitem{%
   \ifentrytype{inproceedings}{%
     \clearfield{year}%
     \clearfield{pages}%
-    \clearfield{booktitle}%
     \clearfield{note}%
   }{%
   }%
@@ -49,13 +50,45 @@
 \setlength{\biblabelsep}{2.5em}
 
 \DeclareFieldFormat
-  [article,book,inbook,incollection,inproceedings,patent,thesis,unpublished]
+  [article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
   {title}{{\em #1}}
 
 \setlength{\cvlabelwidth}{5em}
 \setlength{\cvlabelskip}{%
 0.2\baselineskip
 }%
+\newcommand{\nameuse}[1]{%
+  \def\do##1{\settoggle{blx@use##1}{#1}}%
+  \dolistcsloop{blx@datamodel@names}}
+
+\newcommand{\nameusesave}{%
+  \def\do##1{%
+    \providetoggle{blx@save@use##1}%
+    \iftoggle{blx@use##1}{\toggletrue{blx@save@use##1}}{\togglefalse{blx@save@use##1}}%
+  }%
+  \dolistcsloop{blx@datamodel@names}}
+
+\newcommand{\nameuserestore}{%
+  \def\do##1{%
+    \iftoggle{blx@save@use##1}{\toggletrue{blx@use##1}}{\togglefalse{blx@use##1}}%
+  }%
+  \dolistcsloop{blx@datamodel@names}}
+
+% \DeclareDelimFormat[bib]{nametitledelim}{\newline\bibsentence}
+
+% \makeatletter
+% \def\do#1{
+%   \ifcsdef{blx@bbx@#1}
+%     {\xpatchbibdriver{#1}
+%        {\printlist{language}%
+%         \newunit\newblock}
+%        {\printlist{language}%
+%         \printunit{\newline\bibsentence}}
+%        {}{}}
+%     {}} 
+% \abx@doentrytypes
+% \makeatother
+
 
 
 \begin{document}
@@ -71,10 +104,13 @@
 
   {\large \textbf{Education}}
   \begin{itemize}
-    \item[] PhD, \textsc{Computer Science} (\small$08/2016$\,-\,Present)\\
+    \item[] PhD, \textsc{Computer Science} (\small$08/2016$\,---\,$09/2021$)\\
+    Privacy and Scalability for Decentralized Cryptographic Systems \\
+    Advised by Alessandro Chiesa and Raluca Ada Popa\\
     \emph{University of California, Berkeley}
 
-  \item[] BSc, \textsc{Electrical Engineering \& Computer Science} (\small$08/2012$\,-\,$05/2016$)\\
+  \item[] BSc, \textsc{Electrical Engineering \& Computer Science} (\small$08/2012$\,---\,$05/2016$)\\
+    Advised by David Wagner\\
     \emph{University of California, Berkeley}
   \end{itemize}
   %
@@ -82,36 +118,132 @@
   {
     \small
     \noindent
-    \nocite{BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
+    \nocite{BuenzCLMS20,LehmkuhlMSP21,BuenzMMTV19,BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
+    \nameusesave
+    \nameuse{false}
     \printbibliography[title = {\small Conference publications}, type=inproceedings]
-    \nocite{ChiesaLMZ21,LehmkuhlMSP21,BuenzCLMS20,BuenzMMTV19}
+    \nocite{ChiesaLMZ21}
     \printbibliography[title = {\small Preprints}, type=misc]
+    \nameuserestore
   }
-  \footnotetext[1]{Contribution order.}
 
+  {\large\textbf{Software}}
+  \begin{itemize}
+    \item[] \texttt{arkworks} is an ecosystem of Rust libraries for programming zkSNARKs. The ecosystem provides a modular interface to the various 
+
+    \item[] \textsc{Delphi}
+
+    \item[] \textsc{Muse}
+  \end{itemize}
+  
 
   {\clearpage\large\textbf{Teaching}}
   \begin{itemize}
-    \item[] \emph{Co-Instructor, {CS294-163}: Decentralized Security (Fa~'19)}\\
+    \item[] \emph{Co-Instructor, {CS294-163}: Decentralized Security (Fall 2019)}\\
       {\small
-        Together with Prof.~Raluca Ada Popa, I designed and taught a new course on the theory and practice of \emph{systems for decentralized security}. I created hands-on tutorials for students to get experience with the latest tools in the space, and also designed and graded homework.
+        Together with Professor Raluca Ada Popa, I designed and taught a new course on the theory and practice of \emph{systems for decentralized security}. I created hands-on tutorials for students to get experience with the latest tools in the space, and also designed and graded homework.
       }
-    \item[] \emph{Teaching Assistant, {CS161}: Computer Security (Sp~'19, Sp~'16)}\\
+    \item[] \emph{Teaching Assistant, {CS161}: Computer Security (Spring 2019, Spring 2016)}\\
       {\small
       I taught sections, designed homeworks, and graded exams for the undergraduate computer security class at UC Berkeley.}
+
+    \item[] \emph{Tutorial leader, zkProof4 Workshop on} \texttt{arkworks}\\
+      {\small
+      I designed and lead a tutorial introducing workshop participants to \texttt{arkworks} APIs.}
   \end{itemize}
 
   %
   {\large\textbf{Talks}}
   \begin{itemize}
-    \item[] \emph{Proof-Carrying Data from Accumulation Schemes:} JHU Security Seminar, Stanford Security Seminar, zkStudyClub.
-    \item[] \emph{\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks:} RISE Lab Retreat~'20, TPMPC Workshop, USENIX Security~'20, PPML~'20.
-    \item[] \emph{$\textsc{Marlin}$: Preprocessing {zkSNARKs} with Universal and Updatable {SRS}:}. zkSummit~'19.
-    \item[] \emph{$\textsc{Zexe}$: Enabling Decntralized Private Computation:}. Stanford Blockchain Conference~'19, Bay Area Crypto Day~'19, PENCIL Workshop~'19, Zcon1, CESC~'19, Simons Institute Blockchain in Society Workshop, S\&P~20.
+    \item[] \emph{Privacy and Scalability for Decentralized Cryptographic Systems}
+    \begin{itemize}[noitemsep]
+      \item[] Thesis talk (September 2021)
+    \end{itemize}
 
-    \item[] \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index}: Bay Area Crypto Day~'18, S\&P~18, RISE Lab Retreat~'18.
-    \item[] \emph{Decentralized Anonymous Micropayments}: 
-      EUROCRYPT~2017, NYU Crypto Seminar, Rambus Inc, Bay Area Crypto Day~'16.
+    \item[] \emph{Recent Advances in Proof-carrying Data}
+    \begin{itemize}[noitemsep]
+      \item[] Qualifying Exam talk (July 2021)
+    \end{itemize}
+
+    \item[] \texttt{arkworks}: \emph{A Rust Ecosystem for Programming zkSNARKs} 
+    \begin{itemize}[noitemsep]
+      \item[] zkSessions (May 2021)
+      \item[] RISE Lab Summer Retreat (May 2021)
+      \item[] zkProof Workshop 4 (April 2021)
+      \item[] zkSummit6 (November 2020)
+    \end{itemize}
+
+    \item[] \emph{zkSNARKs from Polynomial Commitments} 
+    \begin{itemize}[noitemsep]
+      \item[] zkHack (October 2021)
+    \end{itemize}
+
+    \item[] \emph{Proof-Carrying Data without Succinct Arguments} 
+    \begin{itemize}[noitemsep]
+      \item[] UW Cryptography Seminar (May 2021)
+      \item[] NYU Cryptography Reading Group (May 2021)
+      \item[] UCSD Cryptography Seminar (May 2021)
+      \item[] zkStudyClub (February 2021)
+    \end{itemize}
+
+    \item[] \emph{\textsc{Muse}: Secure CNN Inference for Malicious Clients} 
+    \begin{itemize}[noitemsep]
+      \item[] CRYPTO PPML~'21 (August 2021)
+    \end{itemize}
+
+    \item[] \emph{Proof-Carrying Data from Accumulation Schemes} 
+    \begin{itemize}[noitemsep]
+      \item[] zkStudyClub (October 2020)
+      \item[] JHU Security Seminar (September 2020)
+      \item[] Stanford Security Seminar (July 2020)
+    \end{itemize}
+
+    \item[] \emph{\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks} 
+    \begin{itemize}[noitemsep]
+      \item[] PPML~'20 (August 2020)
+      \item[] USENIX Security~'20 (August 2020)
+      \item[] TPMPC Workshop (May 2020)
+      \item[] RISE Lab Winter Retreat~'20 (January 2020)
+    \end{itemize}
+
+    \item[] \emph{$\textsc{Marlin}$: Preprocessing {zkSNARKs} with Universal and Updatable {SRS}}
+    \begin{itemize}[noitemsep]
+      \item[] EUROCRYPT~'20 (May 2020)
+      \item[] zkSummit4 (October 2019)
+    \end{itemize}
+
+    \item[] \emph{$\textsc{Zexe}$: Enabling Decntralized Private Computation}
+    \begin{itemize}[noitemsep]
+      \item[] MIT DCI Seminar (June 2020)
+      \item[] IEEE S\&P~20 (May 2020)
+      \item[] Simons Institute Blockchain in Society Workshop (November 2019)
+      \item[] CESC~'19 (October 2019)
+      \item[] Algorand (September 2019)
+      \item[] Zcon1 (July 2019)
+      \item[] PENCIL Workshop~'19 (May 2019)
+      \item[] Bay Area Crypto Day~'19 (May 2019)
+      \item[] Starfish (April 2019)
+      \item[] 0x (April 2019)
+      \item[] Coinbase (April 2019)
+      \item[] Stanford Blockchain Conference~'19 (February 2019)
+    \end{itemize}
+
+    \item[] \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index}
+    \begin{itemize}[noitemsep]
+      \item[] Google (May 2018)
+      \item[] Bay Area Crypto Day~'18 (May 2018)
+      \item[] IEEE S\&P~18 (May 2018)
+      \item[] RISE Lab Retreat~'18 (May 2018)
+    \end{itemize}
+
+    \item[] \emph{Decentralized Anonymous Micropayments} 
+    \begin{itemize}[noitemsep]
+      \item[] EUROCRYPT~2017 (May 2017)
+      \item[] NYU Crypto Seminar (April 2017)
+      \item[] Boston University Cryptography Seminar (March 2017)
+      \item[] Rambus Inc. (February 2017)
+      \item[] Bay Area Crypto Day~'16 (November 2016)
+    \end{itemize}
   \end{itemize}
 
   %
@@ -119,16 +251,18 @@
   \begin{itemize}
     \small
     \item[] \emph{External reviewer}:
+      TCC~2021,
+      CRYPTO~2021,
       S\&P~2020,
+      EUROCRYPT~2020,
       OSDI~2018,
       NSDI~2018,
       TCC~2017,
       NDSS~2018,
       CCS~2016,
       TCC~2016-B.
-      % TODO: Add student adcomm service.
 
     \item[] \emph{Graduate Admissions Committee, UC Berkeley}.
-  \end{description}
+  \end{itemize}
 \end{cv}
 \end{document}

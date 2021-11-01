@@ -9,3 +9,6 @@
 *.blg
 *.bcf
 *.xml
+.vscode
+.DS_STORE
+out
