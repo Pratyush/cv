@@ -14,6 +14,36 @@
 \usepackage{xpatch}
 \usepackage{microtype}
 \usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{etaremune}
+
+\makeatletter %% <- change @ so that it can be used in macro names
+  %% Define the resume key for etaremune:
+  \define@boolkey[EM]{etaremune}{resume}[true]{}
+  \presetkeys[EM]{etaremune}{resume=false}{} %% <- false by default
+
+  %% Increase starting value of previous etaremune environment if resuming
+  \AtEndEnvironment{etaremune}{%
+    \ifEM@etaremune@resume
+      \EM@resumewrite{\csname EM@prevlist@\@roman{\@enumdepth}\endcsname}{\EM@currlist}%
+    \fi
+    \expandafter\xdef\csname EM@prevlist@\@roman{\@enumdepth}\endcsname{\EM@currlist}%
+  }
+  \newcommand*\EM@resumewrite[2]{% %% Expand arguments and then call EM@resume@write@
+    \begingroup
+      \edef\temp{\noexpand\EM@resumewrite@
+        {\expandafter\string\csname etaremune@#1\endcsname}%
+        {\expandafter\string\csname etaremune@#2\endcsname}}%
+      \temp
+    \endgroup
+  }
+  \newcommand*\EM@resumewrite@[2]{% %% Write to aux file
+    \immediate\write\@auxout{\xdef#1{\string\noexpand\string\the\numexpr#1+\string\noexpand#2 }}%
+  }
+\makeatother %% <- change @ back
+
+% Increase title spacing
+\titlespacing{\section}{0pt}{*5}{*1.5}
 
 \usepackage{hyperref}
 \definecolor{linkcolour}{rgb}{0,0.2,0.6}
@@ -21,8 +51,49 @@
 
 \bibliography{pubs.bib}
 \tolerance=600
+\newbibmacro{string+url}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}
+\ExecuteBibliographyOptions{url=false}
+\newbibmacro{alphabetical}{\ifkeyword{alphabetical}{{\footnotesize\emph{(alphabetical author order)}\newline}}{}}
 \renewbibmacro{in:}{}
-\renewbibmacro*{byauthor}{\printnames[byauthor]{author}}
+\renewbibmacro*{byauthor}{\printnames[byauthor]{author}\nopunct\newline}
+\DefineBibliographyExtras{english}{%
+  \renewcommand*{\finalnamedelim}{\addcomma\addspace}%
+}
+\DeclareFieldFormat
+  [misc, article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
+  {title}{\usebibmacro{string+url}{\mkbibemph{#1}}\nopunct\newline}
+\DeclareDelimFormat[bib]{nametitledelim}{\nopunct}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \usebibmacro{author/translator+others}%
+  \usebibmacro{byauthor}%
+  \usebibmacro{alphabetical}
+  \usebibmacro{series+number}%
+  \setunit{\printdelim{nametitledelim}}
+  \usebibmacro{maintitle+booktitle}%
+  \setunit{\printdelim{nametitledelim}}\newblock
+}
+\AtEveryBibitem{%
+  \ifentrytype{inproceedings}{%
+    \clearfield{year}%
+    \clearfield{pages}%
+    \clearfield{note}%
+  }{%
+  }%
+}
+% Format bib entries
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \usebibmacro{author/translator+others}%
+  \usebibmacro{byauthor}%
+  \usebibmacro{alphabetical}
+  \printfield{howpublished}%
+  }
 \AtEveryBibitem{%
   \ifentrytype{inproceedings}{%
     \clearfield{year}%
@@ -49,10 +120,8 @@
 \DeclareFieldFormat{labelnumberwidth}{}
 \setlength{\biblabelsep}{2.5em}
 
-\DeclareFieldFormat
-  [article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
-  {title}{{\em #1}}
 
+\setlength\bibitemsep{1em}
 \setlength{\cvlabelwidth}{5em}
 \setlength{\cvlabelskip}{%
 0.2\baselineskip
@@ -74,183 +143,189 @@
   }%
   \dolistcsloop{blx@datamodel@names}}
 
-% \DeclareDelimFormat[bib]{nametitledelim}{\newline\bibsentence}
-
-% \makeatletter
-% \def\do#1{
-%   \ifcsdef{blx@bbx@#1}
-%     {\xpatchbibdriver{#1}
-%        {\printlist{language}%
-%         \newunit\newblock}
-%        {\printlist{language}%
-%         \printunit{\newline\bibsentence}}
-%        {}{}}
-%     {}} 
-% \abx@doentrytypes
-% \makeatother
-
-
-
 \begin{document}
-% \bibliographystyle{plain}
 \begin{cv}{\vspace{-5em}}
   \begin{center}
     \huge
     \textbf{Pratyush Mishra}
   \end{center}
+  \vspace{1em}
 
   \href{mailto:pratyush@berkeley.edu}{\texttt{pratyush@berkeley.edu}}\hfill
   \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
-
-  {\large \textbf{Education}}
+  {\section*{Education}}
   \begin{itemize}
     \item[] PhD, \textsc{Computer Science} (\small$08/2016$\,---\,$09/2021$)\\
-    Privacy and Scalability for Decentralized Cryptographic Systems \\
-    Advised by Alessandro Chiesa and Raluca Ada Popa\\
-    \emph{University of California, Berkeley}
+    \emph{University of California, Berkeley}\\
+    Thesis: Privacy and Scalability for Decentralized Cryptographic Systems \\
+    Advised by Alessandro Chiesa and Raluca Ada Popa
 
   \item[] BSc, \textsc{Electrical Engineering \& Computer Science} (\small$08/2012$\,---\,$05/2016$)\\
-    Advised by David Wagner\\
-    \emph{University of California, Berkeley}
+  \emph{University of California, Berkeley}\\
+    Advised by David Wagner
   \end{itemize}
   %
-  {\large\textbf{Papers}}
   {
     \small
     \noindent
     \nocite{BuenzCLMS20,LehmkuhlMSP21,BuenzMMTV19,BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
     \nameusesave
     \nameuse{false}
-    \printbibliography[title = {\small Conference publications}, type=inproceedings]
-    \nocite{ChiesaLMZ21}
-    \printbibliography[title = {\small Preprints}, type=misc]
+    \vspace{-3em}
+    \printbibliography[type=inproceedings,title = {\Large Papers}]
+    % \nocite{ChiesaLMZ21}
+    % \printbibliography[title = {\large Preprints}, type=misc]
     \nameuserestore
   }
 
-  {\large\textbf{Software}}
-  \begin{itemize}
-    \item[] \texttt{arkworks} is an ecosystem of Rust libraries for programming zkSNARKs. The ecosystem provides a modular interface to the various 
+  {\section*{Software}}
+  \begin{itemize}[itemsep=1em]
+    \item[] \href{https://github.com/arkworks-rs}{\texttt{arkworks}}: A Rust Ecosystem for zkSNARK development\\
+    An open-source ecosystem of Rust libraries for programming zkSNARKs. It provides a modular interface to various components involved in constructing zkSNARKs and developing applications that rely on these. \texttt{arkworks} has been used by numerous academic and industrial projects, and has attracted a community of regular open-source contributors.
 
-    \item[] \textsc{Delphi}
+    \item[] \textsc{Delphi} {\footnotesize(\url{https://github.com/mc2-project/delphi/})}\\
+      Our open-source implementation of the research paper ``\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks''.
 
-    \item[] \textsc{Muse}
+    \item[] \textsc{Muse} {\footnotesize(\url{https://github.com/mc2-project/muse/})}\\
+      Our open-source implementation of the research paper ``\textsc{Muse}: Secure CNN Inference for Malicious Clients''. Our implementation passed artifact evaluation at USENIX Security 2021.
   \end{itemize}
   
-
-  {\clearpage\large\textbf{Teaching}}
-  \begin{itemize}
-    \item[] \emph{Co-Instructor, {CS294-163}: Decentralized Security (Fall 2019)}\\
-      {\small
-        Together with Professor Raluca Ada Popa, I designed and taught a new course on the theory and practice of \emph{systems for decentralized security}. I created hands-on tutorials for students to get experience with the latest tools in the space, and also designed and graded homework.
-      }
-    \item[] \emph{Teaching Assistant, {CS161}: Computer Security (Spring 2019, Spring 2016)}\\
-      {\small
-      I taught sections, designed homeworks, and graded exams for the undergraduate computer security class at UC Berkeley.}
-
-    \item[] \emph{Tutorial leader, zkProof4 Workshop on} \texttt{arkworks}\\
+  {\section*{Teaching}}
+  \begin{itemize}[itemsep=1em]
+    \item[] \href{https://github.com/arkworks-rs/r1cs-tutorial/}{\emph{Tutorial leader, zkProof4 Workshop on} \texttt{arkworks} \emph{(Spring 2021)}}\\
       {\small
       I designed and lead a tutorial introducing workshop participants to \texttt{arkworks} APIs.}
+
+    \item[] \href{https://inst.eecs.berkeley.edu/~cs294-163/fa19/}{\emph{Co-Instructor, {CS294-163}: Decentralized Security (Fall 2019)}}\\
+      {\small
+        Together with Professor Raluca Ada Popa, I designed and taught a new course on the theory and practice of \emph{systems for decentralized security}. I taught lectures, created hands-on tutorials for students to get experience with the latest tools in the space, and designed and graded homework.
+      }
+    \item[] \href{https://inst.eecs.berkeley.edu/~cs161/sp19/}{\emph{Teaching Assistant, {CS161}: Computer Security (Spring 2019)}}\\
+      {\small
+      I taught sections, designed homeworks, and graded exams for the undergraduate computer security class at UC Berkeley taught by Professors Raluca Ada Popa and Nicholas Weaver.}
+    \item[] \href{https://inst.eecs.berkeley.edu/~cs161/sp16/}{\emph{Teaching Assistant, {CS161}: Computer Security (Spring 2016)}}\\
+      {\small
+      I taught sections, designed homeworks, and graded exams for the undergraduate computer security class at UC Berkeley taught by Professors Raluca Ada Popa and David Wagner.}
+    
   \end{itemize}
 
   %
-  {\large\textbf{Talks}}
-  \begin{itemize}
-    \item[] \emph{Privacy and Scalability for Decentralized Cryptographic Systems}
-    \begin{itemize}[noitemsep]
-      \item[] Thesis talk (September 2021)
-    \end{itemize}
-
-    \item[] \emph{Recent Advances in Proof-carrying Data}
-    \begin{itemize}[noitemsep]
-      \item[] Qualifying Exam talk (July 2021)
-    \end{itemize}
-
+  \section*{Talks}
+  \begin{itemize}[itemsep=1.25em]
     \item[] \texttt{arkworks}: \emph{A Rust Ecosystem for Programming zkSNARKs} 
-    \begin{itemize}[noitemsep]
-      \item[] zkSessions (May 2021)
-      \item[] RISE Lab Summer Retreat (May 2021)
-      \item[] zkProof Workshop 4 (April 2021)
-      \item[] zkSummit6 (November 2020)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt]
+      \item ZKP Workshop, CESC (October 2022)
+      \item Real World Cryptography Invited Talk (April 2022)
+      \item zkSessions (May 2021)
+      \item RISE Lab Summer Retreat (May 2021)
+      \item zkProof Workshop 4 (April 2021)
+      \item zkSummit6 (November 2020)
+    \end{etaremune}
+
+    \item[] \emph{Efficient Private Delegation of zkSNARK Provers}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+      \item Frontiers of zkMPC Panel (October 2022)
+      \item zkSummit7 (April 2022)
+    \end{etaremune}
+
+    \item[] \emph{Privacy and Scalability for Decentralized Cryptographic Systems}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+      \item Tufts CS Colloquium (March 2022)
+      \item UPenn CIS Seminar (March 2022)
+      \item GeorgiaTech SCP Seminar (March 2022)
+      \item UCL CS Seminar (February 2022)
+      \item Thesis talk (September 2021)
+    \end{etaremune}
+
 
     \item[] \emph{zkSNARKs from Polynomial Commitments} 
-    \begin{itemize}[noitemsep]
-      \item[] zkHack (October 2021)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+      \item zkHack (October 2021)
+    \end{etaremune}
+
+    \item[] \emph{Recent Advances in Proof-carrying Data}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+      \item Qualifying Exam talk (July 2021)
+    \end{etaremune}
+
+    
 
     \item[] \emph{Proof-Carrying Data without Succinct Arguments} 
-    \begin{itemize}[noitemsep]
-      \item[] UW Cryptography Seminar (May 2021)
-      \item[] NYU Cryptography Reading Group (May 2021)
-      \item[] UCSD Cryptography Seminar (May 2021)
-      \item[] zkStudyClub (February 2021)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item UW Cryptography Seminar (May 2021)
+      \item NYU Cryptography Reading Group (May 2021)
+      \item UCSD Cryptography Seminar (May 2021)
+      \item zkStudyClub (February 2021)
+    \end{etaremune}
 
     \item[] \emph{\textsc{Muse}: Secure CNN Inference for Malicious Clients} 
-    \begin{itemize}[noitemsep]
-      \item[] CRYPTO PPML~'21 (August 2021)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item CRYPTO PPML~'21 (August 2021)
+    \end{etaremune}
 
     \item[] \emph{Proof-Carrying Data from Accumulation Schemes} 
-    \begin{itemize}[noitemsep]
-      \item[] zkStudyClub (October 2020)
-      \item[] JHU Security Seminar (September 2020)
-      \item[] Stanford Security Seminar (July 2020)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item zkStudyClub (October 2020)
+      \item JHU Security Seminar (September 2020)
+      \item Stanford Security Seminar (July 2020)
+    \end{etaremune}
 
     \item[] \emph{\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks} 
-    \begin{itemize}[noitemsep]
-      \item[] PPML~'20 (August 2020)
-      \item[] USENIX Security~'20 (August 2020)
-      \item[] TPMPC Workshop (May 2020)
-      \item[] RISE Lab Winter Retreat~'20 (January 2020)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item PPML (August 2020)
+      \item USENIX Security (August 2020)
+      \item TPMPC Workshop (May 2020)
+      \item RISE Lab Winter Retreat~'20 (January 2020)
+    \end{etaremune}
 
     \item[] \emph{$\textsc{Marlin}$: Preprocessing {zkSNARKs} with Universal and Updatable {SRS}}
-    \begin{itemize}[noitemsep]
-      \item[] EUROCRYPT~'20 (May 2020)
-      \item[] zkSummit4 (October 2019)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item EUROCRYPT (May 2020)
+      \item zkSummit4 (October 2019)
+    \end{etaremune}
 
-    \item[] \emph{$\textsc{Zexe}$: Enabling Decntralized Private Computation}
-    \begin{itemize}[noitemsep]
-      \item[] MIT DCI Seminar (June 2020)
-      \item[] IEEE S\&P~20 (May 2020)
-      \item[] Simons Institute Blockchain in Society Workshop (November 2019)
-      \item[] CESC~'19 (October 2019)
-      \item[] Algorand (September 2019)
-      \item[] Zcon1 (July 2019)
-      \item[] PENCIL Workshop~'19 (May 2019)
-      \item[] Bay Area Crypto Day~'19 (May 2019)
-      \item[] Starfish (April 2019)
-      \item[] 0x (April 2019)
-      \item[] Coinbase (April 2019)
-      \item[] Stanford Blockchain Conference~'19 (February 2019)
-    \end{itemize}
+    \item[] \emph{$\textsc{Zexe}$: Enabling Decentralized Private Computation}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item MIT DCI Seminar (June 2020)
+      \item IEEE S\&P (May 2020)
+      \item Simons Institute Blockchain in Society Workshop (November 2019)
+      \item CESC (October 2019)
+      \item Algorand (September 2019)
+      \item Zcon1 (July 2019)
+      \item PENCIL Workshop (May 2019)
+      \item Bay Area Crypto Day (May 2019)
+      \item Starfish (April 2019)
+      \item 0x (April 2019)
+      \item Coinbase (April 2019)
+      \item Stanford Blockchain Conference (February 2019)
+    \end{etaremune}
 
     \item[] \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index}
-    \begin{itemize}[noitemsep]
-      \item[] Google (May 2018)
-      \item[] Bay Area Crypto Day~'18 (May 2018)
-      \item[] IEEE S\&P~18 (May 2018)
-      \item[] RISE Lab Retreat~'18 (May 2018)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item Google (May 2018)
+      \item Bay Area Crypto Day (May 2018)
+      \item IEEE S\&P (May 2018)
+      \item RISE Lab Retreat (May 2018)
+    \end{etaremune}
 
     \item[] \emph{Decentralized Anonymous Micropayments} 
-    \begin{itemize}[noitemsep]
-      \item[] EUROCRYPT~2017 (May 2017)
-      \item[] NYU Crypto Seminar (April 2017)
-      \item[] Boston University Cryptography Seminar (March 2017)
-      \item[] Rambus Inc. (February 2017)
-      \item[] Bay Area Crypto Day~'16 (November 2016)
-    \end{itemize}
+    \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+      \item EUROCRYPT (May 2017)
+      \item NYU Crypto Seminar (April 2017)
+      \item Boston University Cryptography Seminar (March 2017)
+      \item Rambus Inc. (February 2017)
+      \item Bay Area Crypto Day (November 2016)
+    \end{etaremune}
   \end{itemize}
 
   %
-  {\large \textbf{Service}}
+{\section*{Service}}
   \begin{itemize}
     \small
+    \item [] \emph{Program Committee}: CRYPTO~2023
     \item[] \emph{External reviewer}:
+      TCC~2022,
+      CRYPTO~2022,
       TCC~2021,
       CRYPTO~2021,
       S\&P~2020,
@@ -262,7 +337,7 @@
       CCS~2016,
       TCC~2016-B.
 
-    \item[] \emph{Graduate Admissions Committee, UC Berkeley}.
+    \item[] \emph{Graduate Admissions Committee, UC Berkeley.}
   \end{itemize}
 \end{cv}
 \end{document}
