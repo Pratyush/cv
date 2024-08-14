@@ -4,6 +4,7 @@
   backend=biber, 
   sorting=none,
   block=par,
+  defernumbers=true,
 ]{biblatex}
 \usepackage[NoDate]{currvita}
 \usepackage{unicode,url,parskip}
@@ -151,8 +152,9 @@
   \end{center}
   \vspace{1em}
 
-  \href{mailto:pratyush@berkeley.edu}{\texttt{pratyush@berkeley.edu}}\hfill
+  \href{mailto:prat@upenn.edu}{\texttt{prat@upenn.edu}}\hfill
   \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}
+
   {\section*{Education}}
   \begin{itemize}
     \item[] PhD, \textsc{Computer Science} (\small$08/2016$\,---\,$09/2021$)\\
@@ -165,14 +167,27 @@
     Advised by David Wagner
   \end{itemize}
   %
+  {\section*{Current Position}}
+  \begin{itemize}
+    \item[] Assistant Professor, \textsc{Computer and Information Science} \\
+    \emph{University of Pennsylvania}
+  \end{itemize}
+  %
+{\section*{Awards}}
+  \begin{itemize}
+    \item[] ACM SIGSAC Doctoral Dissertation Award Runner-up (\small$2023$)
+  \end{itemize}
+  %
+
+
   {
     \small
     \noindent
-    \nocite{BuenzCLMS20,LehmkuhlMSP21,BuenzMMTV19,BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
+    \nocite{ChiesaLMZ23,BuenzCLMS20,LehmkuhlMSP21,BuenzMMTV19,BuenzCMS20,MishraLSZP20,BoweCGMMW20,ChiesaHMMVW20,MishraPCCP18,ChiesaGLMMM17,CarliniMVZSSWZ16,HoLMHSW16,PortnoffLEMLW15}
     \nameusesave
     \nameuse{false}
-    \vspace{-3em}
-    \printbibliography[type=inproceedings,title = {\Large Papers}]
+    \vspace{-2em}
+    \printbibliography[type=inproceedings,title = {\Large Publications}]
     % \nocite{ChiesaLMZ21}
     % \printbibliography[title = {\large Preprints}, type=misc]
     \nameuserestore
@@ -192,6 +207,10 @@
   
   {\section*{Teaching}}
   \begin{itemize}[itemsep=1em]
+    \item[] \emph{Guest lecturer, CIS 2330: Introduction to Blockchain} \emph{(Spring 2023)}\\
+      {\small
+      I taught a lecture on ``Theory and Practice of Zero Knowledge Proofs''.}
+
     \item[] \href{https://zk-learning.org/}{\emph{Guest lecturer, Zero Knowledge Proofs MOOC} \emph{(Spring 2023)}}\\
       {\small
       I designed tutorials and co-taught a lecture on ``Libraries and Compilers for ZKPs''.}
@@ -226,8 +245,9 @@
       \item zkSummit6 (November 2020)
     \end{etaremune}
 
-    \item[] \emph{Efficient Private Delegation of zkSNARK Provers}
+    \item[] \emph{\textsc{Eos}: Efficient Private Delegation of zkSNARK Provers}
     \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+      \item zkStudyClub (April 2023)
       \item Frontiers of zkMPC Panel (October 2022)
       \item zkSummit7 (April 2022)
     \end{etaremune}
@@ -326,20 +346,22 @@
 {\section*{Service}}
   \begin{itemize}
     \small
-    \item [] \emph{Program Committee}: CRYPTO~2023
+    \item [] \emph{Program Committee}: 
+    \begin{itemize}
+      \item IEEE S\&P~2023
+      \item CRYPTO~2023
+    \end{itemize}
     \item[] \emph{External reviewer}:
-      TCC~2022,
-      CRYPTO~2022,
-      TCC~2021,
-      CRYPTO~2021,
-      S\&P~2020,
-      EUROCRYPT~2020,
-      OSDI~2018,
-      NSDI~2018,
-      TCC~2017,
-      NDSS~2018,
-      CCS~2016,
-      TCC~2016-B.
+      \begin{itemize}
+        \item CRYPTO~2022, 21
+        \item TCC~2022, 21, 17, 16-B
+        \item IEEE S\&P~2020
+        \item EUROCRYPT~2020
+        \item OSDI~2018
+        \item NSDI~2018
+        \item NDSS~2018
+        \item CCS~2016
+      \end{itemize}
 
     \item[] \emph{Graduate Admissions Committee, UC Berkeley.}
   \end{itemize}

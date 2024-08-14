@@ -1,0 +1,278 @@
+TY  - JOUR
+AU  - Rosenberg, Michael
+AU  - Mopuri, Tushar
+AU  - Hafezi, Hossein
+AU  - Miers, Ian
+AU  - Mishra, Pratyush
+TI  - Hekaton: Horizontally-Scalable zkSNARKs via Proof Aggregation
+PY  - 2024
+PB  - In submission
+SP  - 1
+EP  - 47
+ER  -
+
+TY  - JOUR
+AU  - Hu, Yuncong
+AU  - Mishra, Pratyush
+AU  - Wang, Xiao
+AU  - Xie, Jie
+AU  - Yang, Kang
+AU  - Zhang, Yuwen
+TI  - Scalable Public and Private Delegation of zkSNARK Provers
+PY  - 2024
+PB  - In preparation
+SP  - 1
+EP  - 54
+KW  - alphabetical
+ER  -
+
+TY  - JOUR
+AU  - Falk, Brett
+AU  - Mishra, Pratyush
+AU  - Shtepel, Matan
+TI  - Malicious Security in PIR Comes (Almost) for Free
+PY  - 2024
+PB  - In submission
+SP  - 1
+EP  - 33
+KW  - alphabetical
+ER  -
+
+TY  - JOUR
+AU  - Baweja, Anubhav
+AU  - Mishra, Pratyush
+AU  - Mopuri, Tushar
+AU  - Newatia, Karan
+AU  - Wang, Steve
+TI  - Scribe: Efficient Read-Write Streaming SNARKs
+PY  - 2024
+PB  - In submission
+SP  - 1
+EP  - 72
+KW  - alphabetical
+ER  -
+
+TY  - JOUR
+AU  - Bünz, Benedikt
+AU  - Mishra, Pratyush
+AU  - Nguyen, Wilson
+AU  - Wang, William
+TI  - Accumulation without Homomorphism
+PY  - 2024
+PB  - In submission
+SP  - 1
+EP  - 46
+KW  - alphabetical
+UR  - https://eprint.iacr.org/2024/474
+ER  -
+
+TY  - CONF
+AU  - Chiesa, Alessandro
+AU  - Lehmkuhl, Ryan
+AU  - Mishra, Pratyush
+AU  - Zhang, Yinuo
+TI  - Eos: Efficient Private Delegation of zkSNARK Provers
+PY  - 2023
+T2  - (32nd USENIX Security Symposium)
+AU  - USENIX Security 2023
+SP  - 6453
+EP  - 6469
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Lehmkuhl, Ryan
+AU  - Mishra, Pratyush
+AU  - Srinivasan, Akshayaram
+AU  - Popa, Raluca Ada
+TI  - Muse: Secure CNN Inference for Malicious Clients
+PY  - 2021
+T2  - (30th USENIX Security Symposium)
+AU  - USENIX Security 2021
+SP  - 2201
+EP  - 2218
+UR  - https://eprint.iacr.org/2021/1040
+ER  -
+
+TY  - CONF
+AU  - Bünz, Benedikt
+AU  - Chiesa, Alessandro
+AU  - Lin, William
+AU  - Mishra, Pratyush
+AU  - Spooner, Nicholas
+TI  - Proof-Carrying Data without Succinct Arguments
+PY  - 2021
+T2  - (41st Annual International Cryptology Conference)
+AU  - CRYPTO 2021
+SP  - 681
+EP  - 710
+UR  - https://eprint.iacr.org/2020/1618
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Bünz, Benedikt
+AU  - Maller, Mary
+AU  - Mishra, Pratyush
+AU  - Tyagi, Nirvan
+AU  - Vesely, Psi
+TI  - Proofs for Inner Pairing Products and Applications
+PY  - 2021
+T2  - (27th Annual International Conference on the Theory and Application of Cryptology and Information Security)
+AU  - ASIACRYPT 2021
+SP  - 65
+EP  - 97
+UR  - https://eprint.iacr.org/2019/1177
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Bünz, Benedikt
+AU  - Chiesa, Alessandro
+AU  - Mishra, Pratyush
+AU  - Spooner, Nicholas
+TI  - Proof-Carrying Data from Accumulation Schemes
+PY  - 2020
+T2  - (18th Theory of Cryptography Conference)
+AU  - TCC 2020
+SP  - 1
+EP  - 18
+UR  - https://eprint.iacr.org/2020/499
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Mishra, Pratyush
+AU  - Lehmkuhl, Ryan
+AU  - Srinivasan, Akshayaram
+AU  - Zheng, Wenting
+AU  - Popa, Raluca Ada
+TI  - Delphi: A Cryptographic Inference Service for Neural Networks
+PY  - 2020
+T2  - (29th USENIX Security Symposium)
+AU  - USENIX Security 2020
+SP  - 2505
+EP  - 2522
+UR  - https://eprint.iacr.org/2020/050
+ER  -
+
+TY  - CONF
+AU  - Chiesa, Alessandro
+AU  - Hu, Yuncong
+AU  - Maller, Mary
+AU  - Mishra, Pratyush
+AU  - Vesely, Psi
+AU  - Ward, Nicholas
+TI  - Marlin: Preprocessing zkSNARKs with Universal and Updatable SRS
+PY  - 2020
+T2  - (39th Annual International Conference on the Theory and Applications of Cryptographic Techniques)
+AU  - EUROCRYPT 2020
+DA  - 2020-05-01
+SP  - 738
+EP  - 768
+UR  - https://eprint.iacr.org/2019/1047
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Bowe, Sean
+AU  - Chiesa, Alessandro
+AU  - Green, Matthew
+AU  - Miers, Ian
+AU  - Mishra, Pratyush
+AU  - Wu, Howard
+TI  - Zexe: Enabling Decentralized Private Computation
+PY  - 2020
+T2  - (41st IEEE Symposium on Security and Privacy)
+AU  - IEEE S&P 2020
+DA  - 2020-05-25
+SP  - 947
+EP  - 964
+UR  - https://eprint.iacr.org/2018/962
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Mishra, Pratyush
+AU  - Poddar, Rishabh
+AU  - Chen, Jerry
+AU  - Chiesa, Alessandro
+AU  - Popa, Raluca Ada
+TI  - Oblix: An Efficient Oblivious Search Index
+PY  - 2018
+T2  - (39th IEEE Symposium on Security and Privacy)
+AU  - IEEE S&P 2018
+SP  - 279
+EP  - 296
+UR  - https://people.eecs.berkeley.edu/~pratyushmishra/docs/papers/oakland18-oblix.pdf
+ER  -
+
+TY  - CONF
+AU  - Chiesa, Alessandro
+AU  - Green, Matthew
+AU  - Liu, Jingcheng
+AU  - Miao, Peihan
+AU  - Miers, Ian
+AU  - Mishra, Pratyush
+TI  - Decentralized Anonymous Micropayments
+PY  - 2017
+T2  - (36th Annual International Conference on the Theory and Applications of Cryptographic Techniques)
+AU  - EUROCRYPT 2017
+SP  - 609
+EP  - 642
+UR  - https://eprint.iacr.org/2016/1033
+KW  - alphabetical
+ER  -
+
+TY  - CONF
+AU  - Ho, Grant
+AU  - Leung, Derek
+AU  - Mishra, Pratyush
+AU  - Hosseini, Ashkan
+AU  - Song, Dawn
+AU  - Wagner, David
+TI  - Smart Locks: Lessons for Securing Commodity Internet of Things Devices
+PY  - 2016
+T2  - (11th Asia Conference on Computer and Communications Security)
+AU  - AsiaCCS 2016
+DA  - 2016-06
+SP  - 461
+EP  - 472
+UR  - https://dl.acm.org/doi/10.1145/2897845.2897886
+ER  -
+
+TY  - CONF
+AU  - Carlini, Nicholas
+AU  - Mishra, Pratyush
+AU  - Vaidya, Tavish
+AU  - Zhang, Yuankai
+AU  - Sherr, Micah
+AU  - Shields, Clay
+AU  - Wagner, David
+AU  - Zhou, Wenchao
+TI  - Hidden Voice Commands
+T2  - (25th USENIX Security Symposium)
+AU  - USENIX Security 2016
+SP  - 513
+EP   -530
+PY  - 2016
+DA  - 2016
+UR  - https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/carlini
+ER  - 
+
+TY  - CONF
+AU  - Portnoff, Rebecca S
+AU  - Lee, Linda N
+AU  - Egelman, Serge
+AU  - Mishra, Pratyush
+AU  - Leung, Derek
+AU  - Wagner, David
+TI  - Somebody's Watching Me?: Assessing the Effectiveness of Webcam Indicator
+      Lights
+T2  - (33rd Annual Conference on Human Factors in Computing Systems)
+J2  - CHI 2015
+SP  - 1649-1658
+PY  - 2015
+DA  - 2015
+UR  - https://dl.acm.org/doi/10.1145/2702123.2702164
+ER  - 

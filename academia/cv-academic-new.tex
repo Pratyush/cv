@@ -1,0 +1,463 @@
+\documentclass[11pt]{article}
+\usepackage[
+  maxnames=99, 
+  backend=biber, 
+  block=par,
+  defernumbers=true,
+  hyperref=false,
+  sorting=nymdt,
+]{biblatex}
+\usepackage[NoDate]{currvita}
+\usepackage{unicode,url,parskip}
+\usepackage{xcolor}
+\usepackage[compact]{titlesec}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{times}
+\usepackage{xpatch}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{etaremune}
+\usepackage{longtable}
+\usepackage{array}
+
+\newcolumntype{R}{>{\raggedleft}p{0.8in}}
+
+% Define 'SectionTable' environment
+\newenvironment{SectionTable}[1]{
+	\renewcommand*{\arraystretch}{1.7}
+	\setlength{\tabcolsep}{6pt}
+  {\Large \textsc{#1}}
+	\begin{longtable}{Rp{5.4in}}}
+{\end{longtable}\vspace{-0.2cm}}
+
+% Define 'SectionTableSingleSpace' environment
+\newenvironment{SectionTableSingleSpace}[1]{
+	\renewcommand*{\arraystretch}{1.2}
+	\setlength{\tabcolsep}{6pt}
+  {\Large \textsc{#1}}
+	\begin{longtable}{Rp{5.4in}}}
+{\end{longtable}\vspace{-0.2cm}}
+
+% Increase title spacing
+\titlespacing{\section}{0pt}{*5}{*1.5}
+
+\usepackage{hyperref}
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour, citecolor=black}
+
+\bibliography{pubs.bib}
+
+\newtoggle{blockterm}
+\preto{\newblockpunct}{\ifterm{\toggletrue{blockterm}}{\togglefalse{blockterm}}}
+\appto{\newblockpunct}{\iftoggle{blockterm}{}{\midsentence}}
+\tolerance=600
+\newbibmacro{string+url}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}
+\ExecuteBibliographyOptions{url=false}
+\newbibmacro{alphabetical}{\ifkeyword{alphabetical}{{\footnotesize\emph{(alphabetical author order)}\newline}}{}}
+\renewbibmacro{in:}{}
+\renewbibmacro*{byauthor}{\printnames[byauthor]{author}\nopunct\newline}
+\DefineBibliographyExtras{english}{%
+  \renewcommand*{\finalnamedelim}{\addcomma\addspace}%
+}
+\DeclareFieldFormat
+  [misc, article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
+  {title}{\usebibmacro{string+url}{\mkbibemph{#1}}\nopunct\newline}
+\DeclareDelimFormat[bib]{nametitledelim}{\nopunct}
+
+\DeclareBibliographyDriver{inproceedings}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{title}%
+  % \usebibmacro{author/translator+others}%
+  \usebibmacro{byauthor}%
+  \usebibmacro{alphabetical}
+  \usebibmacro{series+number}%
+  \setunit{\printdelim{nametitledelim}}
+  \usebibmacro{maintitle+booktitle}%
+  \newunit\newblock% <--- THIS LINE CHANGED HERE
+  \usebibmacro{note+pages}%
+  \newblock
+}
+\AtEveryBibitem{%
+  \ifentrytype{inproceedings}{%
+    \clearfield{year}%
+    \clearfield{note}%
+  }{%
+  }%
+}
+
+% Format bib entries
+\DeclareBibliographyDriver{misc}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \usebibmacro{byauthor}%
+  \usebibmacro{alphabetical}
+  \printfield{howpublished}\printtext{. }\printdate\printtext{.}%
+  \newunit\newblock% <--- THIS LINE CHANGED HERE
+  \usebibmacro{note+pages}%
+}
+\AtEveryBibitem{%
+  \ifentrytype{inproceedings}{%
+    \clearfield{year}%
+    \clearfield{note}%
+  }{%
+  }%
+}
+\AtEveryBibitem{%
+  \ifentrytype{article}{%
+    \clearfield{volume}%
+    \clearfield{number}%
+    \clearfield{month}%
+  }{%
+  }%
+}
+\DeclareFieldFormat{labelnumberwidth}{}
+\setlength{\biblabelsep}{2.5em}
+
+
+\setlength\bibitemsep{1em}
+\setlength{\cvlabelwidth}{5em}
+\setlength{\cvlabelskip}{%
+0.2\baselineskip
+}%
+ 
+\DeclareSortingTemplate{nymdt}{
+  \sort{
+    \field{presort}
+  }
+  \sort[final]{
+    \field{sortkey}
+  }
+  \sort{
+    \field{sortyear}
+    \field{year}
+  }
+  \sort{
+    \field[padside=left,padwidth=2,padchar=0]{month}
+    \literal{00}
+  }
+  \sort{
+    \field[padside=left,padwidth=2,padchar=0]{day}
+    \literal{00}
+  }
+  \sort{
+    \field{sortname}
+    \field{author}
+    \field{editor}
+    \field{translator}
+    \field{sorttitle}
+    \field{title}
+  }
+  \sort{
+    \field{sorttitle}
+  }
+  \sort{
+    \field[padside=left,padwidth=4,padchar=0]{volume}
+    \literal{0000}
+  }
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{cv}{\vspace{-5em}}
+  \begin{center}
+    \huge
+    \textbf{Pratyush Mishra}
+  \end{center}
+  \vspace{1em}
+
+  3300 Walnut Street, Philadelphia, PA 19104\newline
+  \href{mailto:prat@upenn.edu}{\texttt{prat@upenn.edu}}\newline
+  \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}\\
+  Up-to-date as of \today.\\
+  
+  \begin{SectionTable}{Education}
+    2016--2021 & 
+    \textbf{PhD, Computer Science}\newline
+    \emph{University of California, Berkeley}\newline
+    Thesis: Privacy and Scalability for Decentralized Cryptographic Systems \newline
+    Advisors: Alessandro Chiesa and Raluca Ada Popa
+    \\
+
+    2012--2016 & 
+    \textbf{BSc, Electrical Engineering and Computer Science}\newline
+    \emph{University of California}, Berkeley \newline
+    Advisor: David Wagner
+    \\
+  \end{SectionTable}
+
+
+  \begin{SectionTable}{Academic Positions}
+    2023-- & 
+    \textbf{Assistant Professor}\newline
+    \emph{University of Pennsylvania}
+  \end{SectionTable}
+
+  \begin{SectionTable}{Industrial Positions}
+    2021--2023 & 
+    \textbf{Chief Scientist/Cryptographer}\newline
+    \emph{Aleo Systems Inc.}
+  \end{SectionTable}
+  
+  \begin{SectionTableSingleSpace}{Honors and Awards}
+    2022 & 
+    ACM SIGSAC Doctoral Dissertation Award Runner-up
+  \end{SectionTableSingleSpace}
+  
+  \begin{SectionTable}{Grants}
+    2024 & 
+    \textbf{Sony Group} \newline
+    Sony Focused Research Award \newline
+    \emph{Scalable Succinct Arguments of Knowledge (\$150,000)}\\
+    2024 & 
+    \textbf{Sui Foundation} \newline
+    Sui Academic Research Award (Co-PI with Brett Falk) \newline
+    \emph{Low-memory Post-Quantum Transparent zkSNARKs (\$25,000)}
+  \end{SectionTable}
+  
+  {
+    \newrefcontext[labelprefix=C] % Add "C" prefix to conference citations
+    \begin{SectionTable}{Peer-reviewed Conference Publications}
+      \cite{ChiesaLMZ23} & \fullcite{ChiesaLMZ23} \\
+      \cite{BuenzMMTV19} & \fullcite{BuenzMMTV19} \\
+      \cite{LehmkuhlMSP21} & \fullcite{LehmkuhlMSP21} \\
+      \cite{BuenzCLMS20} & \fullcite{BuenzCLMS20} \\
+      \cite{BuenzCMS20} & \fullcite{BuenzCMS20} \\
+      \cite{MishraLSZP20} & \fullcite{MishraLSZP20} \\
+      \cite{BoweCGMMW20} & \fullcite{BoweCGMMW20} \\
+      \cite{ChiesaHMMVW20} & \fullcite{ChiesaHMMVW20} \\
+      \cite{MishraPCCP18} & \fullcite{MishraPCCP18} \\
+      \cite{ChiesaGLMMM17} & \fullcite{ChiesaGLMMM17} \\
+      \cite{CarliniMVZSSWZ16} & \fullcite{CarliniMVZSSWZ16} \\
+      \cite{HoLMHSW16} & \fullcite{HoLMHSW16} \\
+      \cite{PortnoffLEMLW15} & \fullcite{PortnoffLEMLW15}
+    \end{SectionTable}
+    \newsavebox\confbib
+    \savebox\confbib{\parbox{\textwidth}{\printbibliography{type=inproceedings}}}
+  }
+
+  \begin{refsection}
+    \newrefcontext[labelprefix=P] % Add "P" prefix to preprint citations
+    \begin{SectionTable}{Manuscripts}
+      \cite{RosenbergMHMM24} & \fullcite{RosenbergMHMM24} \\
+      \cite{HuMWXYZ24} & \fullcite{HuMWXYZ24} \\
+      \cite{FalkMS24} & \fullcite{FalkMS24} \\
+      \cite{BunzMNW24} & \fullcite{BunzMNW24} \\
+      \cite{BawejaMMNW24} & \fullcite{BawejaMMNW24} \\
+    \end{SectionTable}
+    \newsavebox\preprintbib
+    \savebox\preprintbib{\parbox{\textwidth}{\printbibliography{nottype=inproceedings}}}
+  \end{refsection}
+  
+  \begin{SectionTable}{Open Source Research Software}
+    & 
+    \href{https://github.com/arkworks-rs}{\texttt{arkworks}}: A Rust Ecosystem for zkSNARK development \newline
+    A widely-used open-source ecosystem of Rust libraries for programming succinct zero knowledge proof systems (zkSNARKs).
+  \end{SectionTable}
+  
+  \begin{SectionTableSingleSpace}{Invited Talks}
+    & \emph{Zero Knowledge Proofs} \\
+    2023 & Guest Lecture, CIS 2330: Introduction to Blockchain, Penn\\[0.4em]
+    
+    & \emph{Libraries and Compilers to build ZKP}\\
+    2023 & Guest Lecture, Zero Knowledge Proofs MOOC\\[0.4em]
+
+    & \texttt{arkworks}: \emph{A Rust Ecosystem for Programming zkSNARKs} \\
+    2022 & ZKP Workshop, CESC \\
+    2022 & Real World Cryptography \\[0.4em]
+
+    & \emph{Privacy and Scalability for Decentralized Cryptographic Systems}\\
+    2022 & Tufts CS Colloquium\\
+    2022 & UPenn CIS Colloquium\\
+    2022 & GeorgiaTech SCP Seminar\\
+    2022 & UCL CS Seminar\\[0.4em]
+
+    & \emph{Proof-Carrying Data without Succinct Arguments} \\
+    2021 & UW Cryptography Seminar\\
+    2021 & NYU Cryptography Reading\\
+    2021 & UCSD Cryptography Seminar\\
+    2021 & zkStudyClub\\[0.4em]
+    
+    
+    & \emph{Proof-Carrying Data from Accumulation Schemes} \\
+    2020 &  zkStudyClub \\
+    2020 &  JHU Security Seminar \\
+    2020 &  Stanford Security Seminar \\[0.4em]
+    
+    
+    & \emph{$\textsc{Zexe}$: Enabling Decentralized Private Computation} \\
+      2020 & MIT DCI Seminar \\
+      2019 & Simons Institute Blockchain in Society Workshop \\
+      2019 & Algorand \\
+      2019 & Bay Area Crypto Day \\
+      2019 & 0x \\
+      2019 & Coinbase \\[0.4em]
+
+    & \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index} \\
+      2018 & Google \\
+      2018 & Bay Area Crypto Day \\[0.4em]
+      
+      
+    & \emph{Decentralized Anonymous Micropayments} \\
+      2017 & NYU Crypto Seminar \\
+      2017 & Boston University Cryptography Seminar \\
+      2017 & Rambus Inc. \\
+      2016 & Bay Area Crypto Day 
+    
+    % \item[] 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt]
+    %   \item ZKP Workshop, CESC (October 2022)
+    %   \item Real World Cryptography Invited Talk (April 2022)
+    %   \item zkSessions (May 2021)
+    %   \item RISE Lab Summer Retreat (May 2021)
+    %   \item zkProof Workshop 4 (April 2021)
+    %   \item zkSummit6 (November 2020)
+    % \end{etaremune}
+
+    
+    % \item[] \emph{\textsc{Eos}: Efficient Private Delegation of zkSNARK Provers}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+    %   \item zkStudyClub (April 2023)
+    %   \item Frontiers of zkMPC Panel (October 2022)
+    %   \item zkSummit7 (April 2022)
+    % \end{etaremune}
+
+    % \item[] \emph{Privacy and Scalability for Decentralized Cryptographic Systems}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+    %   \item Tufts CS Colloquium (March 2022)
+    %   \item UPenn CIS Seminar (March 2022)
+    %   \item GeorgiaTech SCP Seminar (March 2022)
+    %   \item UCL CS Seminar (February 2022)
+    %   \item Thesis talk (September 2021)
+    % \end{etaremune}
+
+
+    % \item[] \emph{zkSNARKs from Polynomial Commitments} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+    %   \item zkHack (October 2021)
+    % \end{etaremune}
+
+    % \item[] \emph{Recent Advances in Proof-carrying Data}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt,topsep=0pt,resume]
+    %   \item Qualifying Exam talk (July 2021)
+    % \end{etaremune}
+
+    % \item[] \emph{Proof-Carrying Data without Succinct Arguments} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item UW Cryptography Seminar (May 2021)
+    %   \item NYU Cryptography Reading Group (May 2021)
+    %   \item UCSD Cryptography Seminar (May 2021)
+    %   \item zkStudyClub (February 2021)
+    % \end{etaremune}
+
+    % \item[] \emph{\textsc{Muse}: Secure CNN Inference for Malicious Clients} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item CRYPTO PPML~'21 (August 2021)
+    % \end{etaremune}
+
+    % \item[] \emph{Proof-Carrying Data from Accumulation Schemes} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item zkStudyClub (October 2020)
+    %   \item JHU Security Seminar (September 2020)
+    %   \item Stanford Security Seminar (July 2020)
+    % \end{etaremune}
+
+    % \item[] \emph{\textsc{Delphi}: {A} Cryptographic Inference Service for Neural Networks} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item PPML (August 2020)
+    %   \item USENIX Security (August 2020)
+    %   \item TPMPC Workshop (May 2020)
+    %   \item RISE Lab Winter Retreat~'20 (January 2020)
+    % \end{etaremune}
+
+    % \item[] \emph{$\textsc{Marlin}$: Preprocessing {zkSNARKs} with Universal and Updatable {SRS}}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item EUROCRYPT (May 2020)
+    %   \item zkSummit4 (October 2019)
+    % \end{etaremune}
+
+    % \item[] \emph{$\textsc{Zexe}$: Enabling Decentralized Private Computation}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item MIT DCI Seminar (June 2020)
+    %   \item IEEE S\&P (May 2020)
+    %   \item Simons Institute Blockchain in Society Workshop (November 2019)
+    %   \item CESC (October 2019)
+    %   \item Algorand (September 2019)
+    %   \item Zcon1 (July 2019)
+    %   \item PENCIL Workshop (May 2019)
+    %   \item Bay Area Crypto Day (May 2019)
+    %   \item Starfish (April 2019)
+    %   \item 0x (April 2019)
+    %   \item Coinbase (April 2019)
+    %   \item Stanford Blockchain Conference (February 2019)
+    % \end{etaremune}
+
+    % \item[] \emph{$\textsc{Oblix}$: An Efficient Oblivious Search Index}
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item Google (May 2018)
+    %   \item Bay Area Crypto Day (May 2018)
+    %   \item IEEE S\&P (May 2018)
+    %   \item RISE Lab Retreat (May 2018)
+    % \end{etaremune}
+
+    % \item[] \emph{Decentralized Anonymous Micropayments} 
+    % \begin{etaremune}[itemsep=0pt,parsep=0pt, resume]
+    %   \item EUROCRYPT (May 2017)
+    %   \item NYU Crypto Seminar (April 2017)
+    %   \item Boston University Cryptography Seminar (March 2017)
+    %   \item Rambus Inc. (February 2017)
+    %   \item Bay Area Crypto Day (November 2016)
+    % \end{etaremune}
+    
+  \end{SectionTableSingleSpace}
+  
+  
+  \begin{SectionTableSingleSpace}{Advising}
+           & \emph{PhD} \\
+    2023-- & Tushar Mopuri (Penn)\\
+    2023-- & Alireza Shirzad (Penn)\\
+    2024-- & Anubhav Baweja (Penn, joint with Sampath Kannan)\\[0.4em]
+        & \emph{Masters} \\
+    2024-- & Spencer Solit (Penn)\\
+    2024-- & Steve Wang (Penn)\\[0.4em]
+        & \emph{Undergraduate} \\
+    2023-- & Maximilian Tsiang (Penn)\\
+    2023   & Spencer Solit (Penn)\\
+    2019--2021 & Rain Lehmkuhl (UC Berkeley)
+  \end{SectionTableSingleSpace}
+  
+  
+  \begin{SectionTableSingleSpace}{Teaching}
+    Spring 2024 & CIS 5560: Cryptography (Penn)\\
+    Fall 2023 & CIS 7000-2: Theory and Practice of Succinct Zero Knowledge Proofs (Penn)\\
+    Fall 2019 & CS 294-163: Decentralized Security (UC Berkeley, Co-Instructor)\\
+    Spring 2019 & CS 161: Computer Security (UC Berkeley, TA)\\
+    Spring 2016 & CS 161: Computer Security (UC Berkeley, TA)
+  \end{SectionTableSingleSpace}
+  
+  \begin{SectionTableSingleSpace}{Professional Service}
+    & \emph{Program Committees}\\
+      & IEEE S\&P 2025, IEEE S\&P 2024, CRYPTO 2023\\[0.4em]
+      
+    & \emph{External Reviewer}\\
+        & CRYPTO 2022, 
+        TCC 2022, 
+        CRYPTO 2021, TCC 2021,
+        IEEE S\&P 2020,
+        EUROCRYPT 2020,
+        OSDI 2018,
+        NSDI 2018,
+        NDSS 2018,
+        TCC 2017, 
+        TCC 2016-B,
+        CCS 2016.\\[0.4em]
+
+    & \emph{Departmental Service}\\
+    2018 & Graduate Admissions Committee (UC Berkeley)
+  \end{SectionTableSingleSpace}
+\end{cv}
+\end{document}
