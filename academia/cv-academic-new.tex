@@ -62,7 +62,7 @@
 }
 \DeclareFieldFormat
   [misc, article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
-  {title}{\usebibmacro{string+url}{\mkbibemph{#1}}\nopunct\newline}
+  {title}{\usebibmacro{string+url}{#1}\nopunct\newline}
 \DeclareDelimFormat[bib]{nametitledelim}{\nopunct}
 
 \DeclareBibliographyDriver{inproceedings}{%
@@ -210,6 +210,10 @@
   
   \begin{SectionTable}{Grants}
     2024 & 
+    \textbf{Ethereum Foundation} \newline
+    ZK Grant (Co-PI with Sebastian Angel) \newline
+    \emph{Zippel: A language and compiler for building proof systems (\$80,000)}\\
+    2024 & 
     \textbf{Sony Group} \newline
     Sony Focused Research Award \newline
     \emph{Scalable Succinct Arguments of Knowledge (\$150,000)}\\
@@ -244,10 +248,11 @@
   \begin{refsection}
     \newrefcontext[labelprefix=P] % Add "P" prefix to preprint citations
     \begin{SectionTable}{Manuscripts}
-      \cite{RosenbergMHMM24} & \fullcite{RosenbergMHMM24} \\
+      \cite{BunzMNW24b} & \fullcite{BunzMNW24b} \\
+      \cite{DellepereMS24} & \fullcite{DellepereMS24} \\
       \cite{HuMWXYZ24} & \fullcite{HuMWXYZ24} \\
       \cite{FalkMS24} & \fullcite{FalkMS24} \\
-      \cite{BunzMNW24} & \fullcite{BunzMNW24} \\
+      \cite{BunzMNW24a} & \fullcite{BunzMNW24a} \\
       \cite{BawejaMMNW24} & \fullcite{BawejaMMNW24} \\
     \end{SectionTable}
     \newsavebox\preprintbib
@@ -261,6 +266,9 @@
   \end{SectionTable}
   
   \begin{SectionTableSingleSpace}{Invited Talks}
+    & \textsc{Garuda} \emph{and} \textsc{Pari}: \emph{Faster and Smaller SNARKs via Equifficient Polynomial Commitments}\\
+    2024 & Sui Research Colloquium\\[0.4em]
+
     & \emph{Zero Knowledge Proofs} \\
     2023 & Guest Lecture, CIS 2330: Introduction to Blockchain, Penn\\[0.4em]
     
@@ -419,6 +427,7 @@
   
   \begin{SectionTableSingleSpace}{Advising}
            & \emph{PhD} \\
+    2024-- & Bharath Namboothiry (Penn)\\
     2023-- & Tushar Mopuri (Penn)\\
     2023-- & Alireza Shirzad (Penn)\\
     2024-- & Anubhav Baweja (Penn, joint with Sampath Kannan)\\[0.4em]
@@ -442,7 +451,7 @@
   
   \begin{SectionTableSingleSpace}{Professional Service}
     & \emph{Program Committees}\\
-      & IEEE S\&P 2025, IEEE S\&P 2024, CRYPTO 2023\\[0.4em]
+      & FC 2025, IEEE S\&P 2025, IEEE S\&P 2024, CRYPTO 2023\\[0.4em]
       
     & \emph{External Reviewer}\\
         & CRYPTO 2022, 
