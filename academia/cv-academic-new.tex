@@ -6,6 +6,7 @@
   defernumbers=true,
   hyperref=false,
   sorting=nymdt,
+  date=year,
 ]{biblatex}
 \usepackage[NoDate]{currvita}
 \usepackage{unicode,url,parskip}
@@ -97,6 +98,13 @@
   \printfield{howpublished}\printtext{. }\printdate\printtext{.}%
   \newunit\newblock% <--- THIS LINE CHANGED HERE
   \usebibmacro{note+pages}%
+}
+\AtEveryBibitem{%
+  \ifentrytype{misc}{%
+    \clearfield{month}%
+    \clearfield{note}%
+  }{%
+  }%
 }
 \AtEveryBibitem{%
   \ifentrytype{inproceedings}{%
@@ -209,6 +217,10 @@
   \end{SectionTableSingleSpace}
   
   \begin{SectionTable}{Grants}
+    2025 & 
+    \textbf{Ingonyama} \newline
+    Gift (Co-PI with Sebastian Angel) \newline
+    \emph{Zippel: A language and compiler for building proof systems (\$20,000)}\\
     2024 & 
     \textbf{Ethereum Foundation} \newline
     ZK Grant (Co-PI with Sebastian Angel) \newline
@@ -226,6 +238,7 @@
   {
     \newrefcontext[labelprefix=C] % Add "C" prefix to conference citations
     \begin{SectionTable}{Peer-reviewed Conference Publications}
+      \cite{HuMWXYZ24} & \fullcite{HuMWXYZ24} \\
       \cite{BunzMNW24a} & \fullcite{BunzMNW24a} \\
       \cite{RosenbergMHMM24} & \fullcite{RosenbergMHMM24} \\
       \cite{ChiesaLMZ23} & \fullcite{ChiesaLMZ23} \\
@@ -246,17 +259,18 @@
     \savebox\confbib{\parbox{\textwidth}{\printbibliography{type=inproceedings}}}
   }
 
+  \clearpage
   \begin{refsection}
     \newrefcontext[labelprefix=P] % Add "P" prefix to preprint citations
     \begin{SectionTable}{Manuscripts}
+      \cite{BawejaMMS25} & \fullcite{BawejaMMS25} \\
+      \cite{BawejaMMNW24} & \fullcite{BawejaMMNW24} \\
       \cite{BunzMNW24b} & \fullcite{BunzMNW24b} \\
       \cite{DellepereMS24} & \fullcite{DellepereMS24} \\
-      \cite{HuMWXYZ24} & \fullcite{HuMWXYZ24} \\
       \cite{FalkMS24} & \fullcite{FalkMS24} \\
-      \cite{BawejaMMNW24} & \fullcite{BawejaMMNW24} \\
     \end{SectionTable}
     \newsavebox\preprintbib
-    \savebox\preprintbib{\parbox{\textwidth}{\printbibliography{nottype=inproceedings}}}
+    \savebox\preprintbib{\parbox{\textwidth}{\printbibliography{type=misc}}}
   \end{refsection}
   
   \begin{SectionTable}{Open Source Research Software}
@@ -432,16 +446,18 @@
     2023-- & Alireza Shirzad (Penn)\\
     2024-- & Anubhav Baweja (Penn, joint with Sampath Kannan)\\[0.4em]
         & \emph{Masters} \\
-    2024-- & Spencer Solit (Penn)\\
-    2024-- & Steve Wang (Penn)\\[0.4em]
+    2024 & Spencer Solit (Penn)\\
+    2024 & Steve Wang (Penn)\\[0.4em]
         & \emph{Undergraduate} \\
-    2023-- & Maximilian Tsiang (Penn)\\
+    2023--2024 & Maximilian Tsiang (Penn)\\
     2023   & Spencer Solit (Penn)\\
     2019--2021 & Rain Lehmkuhl (UC Berkeley)
   \end{SectionTableSingleSpace}
   
   
   \begin{SectionTableSingleSpace}{Teaching}
+    Spring 2025 & CIS 5560: Cryptography (Penn)\\
+    Fall 2024 & Teaching relief (Penn)\\
     Spring 2024 & CIS 5560: Cryptography (Penn)\\
     Fall 2023 & CIS 7000-2: Theory and Practice of Succinct Zero Knowledge Proofs (Penn)\\
     Fall 2019 & CS 294-163: Decentralized Security (UC Berkeley, Co-Instructor)\\
@@ -451,7 +467,7 @@
   
   \begin{SectionTableSingleSpace}{Professional Service}
     & \emph{Program Committees}\\
-      & FC 2025, IEEE S\&P 2025, IEEE S\&P 2024, CRYPTO 2023\\[0.4em]
+      & FC 2025, IEEE S\&P 2024,2025,2026, CRYPTO 2023,2025\\[0.4em]
       
     & \emph{External Reviewer}\\
         & CRYPTO 2022, 
@@ -464,9 +480,10 @@
         NDSS 2018,
         TCC 2017, 
         TCC 2016-B,
-        CCS 2016.\\[0.4em]
+        CCS 2016.\\[1em]
 
     & \emph{Departmental Service}\\
+    2025 & Faculty Recruitment Committee (Penn)\\
     2018 & Graduate Admissions Committee (UC Berkeley)
   \end{SectionTableSingleSpace}
 \end{cv}
