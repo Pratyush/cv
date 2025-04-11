@@ -53,17 +53,30 @@
 \preto{\newblockpunct}{\ifterm{\toggletrue{blockterm}}{\togglefalse{blockterm}}}
 \appto{\newblockpunct}{\iftoggle{blockterm}{}{\midsentence}}
 \tolerance=600
-\newbibmacro{string+url}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}
+
 \ExecuteBibliographyOptions{url=false}
+
+\newbibmacro{string+url}[1]{\iffieldundef{url}{#1}{\href{\thefield{url}}{#1}}}
 \newbibmacro{alphabetical}{\ifkeyword{alphabetical}{{\footnotesize\emph{(alphabetical author order)}\newline}}{}}
 \renewbibmacro{in:}{}
 \renewbibmacro*{byauthor}{\printnames[byauthor]{author}\nopunct\newline}
+\renewbibmacro*{note+pages}{%
+  \par
+  \printfield{note}%
+  \setunit*{\addcomma\space}%
+  \printfield{pagetotal}%
+  \setunit*{\addperiod\space}%
+  \newunit}
 \DefineBibliographyExtras{english}{%
   \renewcommand*{\finalnamedelim}{\addcomma\addspace}%
 }
 \DeclareFieldFormat
   [misc, article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
   {title}{\usebibmacro{string+url}{#1}\nopunct\newline}
+\DeclareFieldFormat
+  [misc, article, book, inbook, incollection, inproceedings, patent, thesis, unpublished]
+  {pagetotal}{#1 pages\addperiod}
+
 \DeclareDelimFormat[bib]{nametitledelim}{\nopunct}
 
 \DeclareBibliographyDriver{inproceedings}{%
@@ -76,14 +89,13 @@
   \usebibmacro{series+number}%
   \setunit{\printdelim{nametitledelim}}
   \usebibmacro{maintitle+booktitle}%
-  \newunit\newblock% <--- THIS LINE CHANGED HERE
+  \setunit{\printdelim{nametitledelim}}
   \usebibmacro{note+pages}%
   \newblock
 }
 \AtEveryBibitem{%
   \ifentrytype{inproceedings}{%
     \clearfield{year}%
-    \clearfield{note}%
   }{%
   }%
 }
@@ -95,8 +107,8 @@
   \usebibmacro{title}%
   \usebibmacro{byauthor}%
   \usebibmacro{alphabetical}
-  \printfield{howpublished}\printtext{. }\printdate\printtext{.}%
-  \newunit\newblock% <--- THIS LINE CHANGED HERE
+  \printfield{howpublished}\printtext{. }\iffieldundef{howpublished}{\printdate\printtext{.}}{}%
+  \setunit{\printdelim{nametitledelim}}
   \usebibmacro{note+pages}%
 }
 \AtEveryBibitem{%
@@ -109,7 +121,6 @@
 \AtEveryBibitem{%
   \ifentrytype{inproceedings}{%
     \clearfield{year}%
-    \clearfield{note}%
   }{%
   }%
 }
@@ -178,10 +189,13 @@
   \end{center}
   \vspace{1em}
 
-  3300 Walnut Street, Philadelphia, PA 19104\newline
+  3333 Chestnut Street, Philadelphia, PA 19104\newline
   \href{mailto:prat@upenn.edu}{\texttt{prat@upenn.edu}}\newline
   \href{http://www.pratyushmishra.com}{\texttt{pratyushmishra.com}}\\
   Up-to-date as of \today.\\
+  \textbf{Research interests:} Computer security, applied cryptography, zero knowledge proofs.\\
+
+  
   
   \begin{SectionTable}{Education}
     2016--2021 & 
@@ -217,27 +231,54 @@
   \end{SectionTableSingleSpace}
   
   \begin{SectionTable}{Grants}
+    Pending & 
+    \textbf{CICI: IPAAI: Cryptographic Integrity for Scientific Data and Experiments} \newline
+    PI: Pratyush Mishra. Co-PI: Ryan Marcus \newline
+    Total: \$900,000. PM share: \$450,000 \newline
+    \emph{National Science Foundation}\\
+    
+    Pending & 
+    \textbf{PDaSP: Track 2: Private Data Sharing and Integration for Community and Government Organizations} \newline
+    PI: Sebastian Angel. Co-PIs: Pratyush Mishra, Ryan Marcus, Brett Falk, Andreas Haeberlen\newline
+    Total: \$1,499,934. \newline
+    \emph{National Science Foundation}\\
+
+    Pending & 
+    \textbf{NSF SaTC: CORE: Medium: Efficient Verifiable Outsourcing and Zero-knowledge Proofs through Doubly Efficient NP Checkers} \newline
+    PI: Sebastian Angel. Co-PIs: Pratyush Mishra, Steve Zdancewic \newline
+    Total: \$1,200,000. PM share: \$400,000 \newline
+    \emph{National Science Foundation}\\
+
     2025 & 
-    \textbf{Ingonyama} \newline
-    Gift (Co-PI with Sebastian Angel) \newline
-    \emph{Zippel: A language and compiler for building proof systems (\$20,000)}\\
+    \textbf{Zippel: A language and compiler for building proof systems} \newline
+    PI: Sebastian Angel. Co-PI: Pratyush Mishra \newline
+    Total: \$20,000. PM share: \$12,000 \newline
+    \emph{Ingonyama}\\
+
     2024 & 
-    \textbf{Ethereum Foundation} \newline
-    ZK Grant (Co-PI with Sebastian Angel) \newline
-    \emph{Zippel: A language and compiler for building proof systems (\$80,000)}\\
+    \textbf{Zippel: A language and compiler for building proof systems (\$80,000)} \newline
+    PI: Sebastian Angel. Co-PI: Pratyush Mishra \newline
+    Total: \$80,000. PM share: \$20,000 \newline
+    \emph{Ethereum Foundation}\\
+
     2024 & 
-    \textbf{Sony Group} \newline
-    Sony Focused Research Award \newline
-    \emph{Scalable Succinct Arguments of Knowledge (\$150,000)}\\
+    \textbf{Sony Focused Research Award: Scalable Succinct Arguments of Knowledge} \newline
+    PI: Pratyush Mishra \newline
+    Total: \$150,000
+    \newline
+    \emph{Sony Group}\\
+
     2024 & 
-    \textbf{Sui Foundation} \newline
-    Sui Academic Research Award (Co-PI with Brett Falk) \newline
-    \emph{Low-memory Post-Quantum Transparent zkSNARKs (\$25,000)}
+    \textbf{Sui Academic Research Award: Low-memory Post-Quantum Transparent zkSNARKs} \newline
+     PI: Pratyush Mishra. Co-PI: Brett Falk \newline
+     Total: \$25,000. PM share: \$12,500. \newline
+    \emph{Sui Foundation}
   \end{SectionTable}
   
   {
     \newrefcontext[labelprefix=C] % Add "C" prefix to conference citations
     \begin{SectionTable}{Peer-reviewed Conference Publications}
+      \multicolumn2l{\parbox{\textwidth}{\small{Advisees/mentees are \underline{underlined}. Citation numbers are shown for papers with more than 10 citations. 10 publications have more than 100 citations.}}}\\
       \cite{HuMWXYZ24} & \fullcite{HuMWXYZ24} \\
       \cite{BunzMNW24a} & \fullcite{BunzMNW24a} \\
       \cite{RosenbergMHMM24} & \fullcite{RosenbergMHMM24} \\
@@ -263,6 +304,7 @@
   \begin{refsection}
     \newrefcontext[labelprefix=P] % Add "P" prefix to preprint citations
     \begin{SectionTable}{Manuscripts}
+      \multicolumn2l{\small{Advisees/mentees are \underline{underlined}.}}\\
       \cite{BawejaMMS25} & \fullcite{BawejaMMS25} \\
       \cite{BawejaMMNW24} & \fullcite{BawejaMMNW24} \\
       \cite{BunzMNW24b} & \fullcite{BunzMNW24b} \\
@@ -280,6 +322,9 @@
   \end{SectionTable}
   
   \begin{SectionTableSingleSpace}{Invited Talks}
+    & \textsc{Hekaton}: \emph{Horizontally-Scalable zkSNARKs via Proof Aggregation}\\
+    2024 & UCSC Security Seminar \\[0.4em]
+
     & \textsc{Garuda} \emph{and} \textsc{Pari}: \emph{Faster and Smaller SNARKs via Equifficient Polynomial Commitments}\\
     2024 & Sui Research Colloquium\\[0.4em]
 
@@ -445,6 +490,14 @@
     2023-- & Tushar Mopuri (Penn)\\
     2023-- & Alireza Shirzad (Penn)\\
     2024-- & Anubhav Baweja (Penn, joint with Sampath Kannan)\\[0.4em]
+        & \emph{PhD Thesis Committee} \\
+    2025 & Heena Nagda\\
+    2025 & Eleftherios Ioannidis\\
+    2025 & Elizabeth Margolin\\
+    2025 & Jess Woods\\
+    2025 & Yiping Ma\\
+    2024 & Michael Rosenberg (UMD)\\
+    2024 & Ke Zhong\\[0.4em]
         & \emph{Masters} \\
     2024 & Spencer Solit (Penn)\\
     2024 & Steve Wang (Penn)\\[0.4em]
@@ -456,18 +509,18 @@
   
   
   \begin{SectionTableSingleSpace}{Teaching}
-    Spring 2025 & CIS 5560: Cryptography (Penn)\\
+    Spring 2025 & CIS 5560: Cryptography (34 students; Penn)\\
     Fall 2024 & Teaching relief (Penn)\\
-    Spring 2024 & CIS 5560: Cryptography (Penn)\\
-    Fall 2023 & CIS 7000-2: Theory and Practice of Succinct Zero Knowledge Proofs (Penn)\\
-    Fall 2019 & CS 294-163: Decentralized Security (UC Berkeley, Co-Instructor)\\
+    Spring 2024 & CIS 5560: Cryptography (27 students; Penn)\\
+    Fall 2023 & CIS 7000-2: Theory and Practice of Succinct Zero Knowledge Proofs (11 students; Penn)\\
+    Fall 2019 & CS 294-163: Decentralized Security (33 students; UC Berkeley, Co-Instructor)\\
     Spring 2019 & CS 161: Computer Security (UC Berkeley, TA)\\
     Spring 2016 & CS 161: Computer Security (UC Berkeley, TA)
   \end{SectionTableSingleSpace}
   
   \begin{SectionTableSingleSpace}{Professional Service}
     & \emph{Program Committees}\\
-      & FC 2025, IEEE S\&P 2024,2025,2026, CRYPTO 2023,2025\\[0.4em]
+      & FC 2025; IEEE S\&P 2024--26; CRYPTO 2023, 2025\\[0.4em]
       
     & \emph{External Reviewer}\\
         & CRYPTO 2022, 
@@ -483,6 +536,7 @@
         CCS 2016.\\[1em]
 
     & \emph{Departmental Service}\\
+    2025 & Morris and Dorothy Rubinoff Award Committee (Penn)\\
     2025 & Faculty Recruitment Committee (Penn)\\
     2018 & Graduate Admissions Committee (UC Berkeley)
   \end{SectionTableSingleSpace}

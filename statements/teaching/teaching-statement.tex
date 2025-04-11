@@ -1,0 +1,259 @@
+\newif\ifpc
+\newif\iffull
+\newif\ifnotes
+\newif\iflater
+
+\fulltrue
+%\fullfalse
+
+\notestrue
+%\notesfalse
+
+\latertrue
+%\laterfalse
+
+\pctrue
+% \pcfalse
+
+\synctex=1
+
+
+\documentclass[11pt,letterpaper]{article}
+\usepackage[notes=true,later=false]{dtrt}
+\usepackage[giveninits,backend=biber,style=alphabetic,maxnames=88,maxalphanames=6]{biblatex}
+\usepackage[margin=1in]{geometry}
+\DeclareFieldFormat[misc]{title}{\mkbibquote{#1\isdot}}
+
+
+
+\bibliography{title-long,references}
+
+% \usepackage[scr=euler,frak=pxtx]{mathalfa}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+%\usepackage{times}
+\usepackage{newtxtext}
+\usepackage{microtype}
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{xspace}
+\usepackage{paralist}
+\usepackage{mdwlist}
+\usepackage{enumitem}
+  \setlist[itemize]{leftmargin=*}
+  \setlist[enumerate]{leftmargin=*}
+  \setlist[description]{leftmargin=*}
+\usepackage{makecell}
+\usepackage{tikz}
+\usetikzlibrary{
+matrix,
+shapes,
+shapes.geometric,
+shapes.symbols,
+shapes.arrows,
+shapes.multipart,
+shapes.callouts,
+shapes.misc,
+arrows,
+positioning,
+chains,
+calc,
+fit}
+\usepackage{hypcap}
+\usepackage{mleftright}
+\usepackage[margin=4mm,footnotesize,labelfont=bf]{caption}
+
+\usepackage[binary-units]{siunitx}
+  \sisetup{group-minimum-digits=4,group-separator={,}}
+\usepackage{bbm}
+\usepackage{bm}
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{breakcites}
+\usepackage{booktabs}
+\usepackage[f]{esvect}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{scalerel}
+\usepackage{verbatimbox}
+\usepackage{schemata}
+\usepackage{float}
+\usepackage{array}
+\usepackage{threeparttable}
+\usepackage{color, soul}
+\usepackage{subdepth}
+\usepackage{varwidth}
+\usepackage[capitalize, nameinlink]{cleveref}
+\usepackage{xparse}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{fp}
+\usepackage{titling}
+\setlength{\droptitle}{-3cm}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\NPRelation}{\mathcal{R}}
+\newcommand{\NPInstance}{\mathbbm{x}}
+\newcommand{\NPWitness}{\mathbbm{w}}
+\newcommand{\NPIndex}{\mathbbm{i}}
+\newcommand{\Proof}{\pi}
+\newcommand{\Class}[1]{\mathsf{#1}}
+\newcommand{\NP}{\Class{NP}}
+\newcommand{\DoQuote}[1]{``#1''}
+\newcommand{\mc}{\multicolumn}
+\newcommand{\mr}{\multirow}
+\newcommand{\defemph}[1]{\textbf{\emph{#1}}}
+\newcommand{\doclearpage}{%
+\iffull
+\clearpage
+\else
+\fi
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{definition}[theorem]{Definition}
+
+\newtheorem{itheorem}{Theorem}%[section]
+\newtheorem{ilemma}{Lemma}%[section]
+\newtheorem{assumption}{Assumption}
+\newtheorem{idefinition}{Definition}%[section]
+\newtheorem{icorollary}{Corollary}%[section]
+\newtheorem{corollary}{Corollary}%[section]
+
+\theoremstyle{definition} % not italics
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark} %
+\newtheorem{case}{Case}
+
+\crefname{assumption}{Assumption}{Assumptions}
+\crefname{step}{Step}{Steps}
+\crefname{claim}{Claim}{Claims}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AUTHOR NOTES
+%
+\newcommand{\ale}[1]{\dtcolornote[Ale]{red}{#1}}
+\newcommand{\imm}[1]{\dtcolornote[Ian]{purple}{#1}}
+\newcommand{\mdg}[1]{\dtcolornote[Matt]{green}{#1}}
+\newcommand{\pratyush}[1]{\dtcolornote[Pratyush]{blue}{#1}}
+\newcommand{\benedikt}[1]{\dtcolornote[Benedikt]{yellow}{#1}}
+
+\newcommand{\zexe}{\textsc{Zexe}}
+\newcommand{\marlin}{\textsc{Marlin}}
+\newcommand{\arkworks}{\texttt{arkworks}}
+
+\pagestyle{plain}
+
+\newcommand{\hlauthor}[1]{\textcolor{blue}{{#1}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% Declarations for Front Matter
+
+\title{Teaching Statement}
+\author{Pratyush Mishra}
+\date{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+\vspace{-2em}
+
+Applied cryptography has developed a plethora of exciting tools that enable seemingly impossible tasks: joint computations that hide all information about participants' inputs (MPC protocols), cryptographic proof systems that enable verifiers to succinctly check the validity of statement while learning nothing else (zkSNARKs), encrypted computations (homomorphic encryption), and more. These protocols have massive potential for improving the privacy, scalability, and integrity of existing systems, and the last decade has indeed seen some exciting (but limited) deployment of these. 
+
+However, existing resources for learning such advanced applied cryptography are limited: security courses tend to focus on traditional applied cryptography (encryption, MACs, and hash functions), while cryptography courses tend to focus on theoretical foundations (definitions and proofs).
+
+My goal as a teacher and mentor is to fill this gap by \emph{democratizing cryptography}. I want to make applied cryptography accessible to, and exciting for, as wide an audience as possible. I intend to do this by 
+\begin{itemize}[nolistsep]
+  \item Creating and teaching undergraduate and graduate courses that train students in both the systems and theory parts of applied cryptography (\cref{sec:teaching}).
+  \item Fostering a welcoming environment in my research group (\cref{sec:mentorship}).
+  \item Continuing my outreach work on \arkworks{} to provide an on-ramp for zkSNARK programming (\cref{sec:community}).
+\end{itemize}
+
+\section{Teaching}
+\label{sec:teaching}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parhead{Teaching experience}
+My goal is informed by my teaching experiences:
+\begin{itemize}[nolistsep]
+  \item \emph{Co-instructor for graduate seminar on decentralized security:} Together with my advisor, Raluca Ada Popa, I co-designed and co-taught CS294-163, a \href{https://inst.eecs.berkeley.edu/~cs294-163/fa19/}{graduate seminar on decentralized security}. In this class, we introduced students to state-of-the-art cryptographic protocols and systems for decentralized security. My responsibilities included teaching lectures on these protocols, holding office hours, creating homeworks based on the assigned readings, and provided students feedback on their final projects. I also designed and taught tutorial lectures that gave students hands-on experience with implementations of cryptographic tools like secure computation, zkSNARKs, and smart contracts.
+
+  \item \emph{Teaching assistant for undergraduate security:} I have twice served as teaching assistant (TA) for CS161, the undergraduate computer security at Berkeley.  Both times, over 600 students attended My responsibilities included teaching sections, designing and grading homeworks, holding office hours, and grading exams.
+
+  \item \emph{Tutorial leader for} \arkworks{} \emph{tutorial:} I have designed and led tutorials\footnote{\url{https://github.com/arkworks-rs/r1cs-tutorial/}} for \arkworks{} libraries. These tutorials targeted non-cryptographers, and introduced them simultaneously to the theory of advanced cryptographic proofs, as well as how to use these in applications. 
+\end{itemize}
+
+\parhead{My approach}
+Common amongst all these experiences has been the invaluable role of hands-on projects that get students to implement and play around with the techniques they're learning about in lectures and section. For example, in the \arkworks{} tutorials, students gained an intimate understanding of constraint systems used in zKSNARKs, and in CS161, class projects consolidated students' understanding of topics like Merkle trees, key exchange, and more. Based on this, I plan to make ``learning-by-doing'' the foundation of my approach to teaching. 
+
+\parhead{New courses}
+My teaching and research experience qualifies me to teach standard undergraduate courses on security and cryptography. Where appropriate, I intend to augment these courses with hands-on projects that get students into the nitty-gritty details of attacks and defenses. Beyond these, I intend to design and teach two new courses:
+\begin{itemize}[noitemsep]
+  \item \emph{Undergraduate course on applied cryptography:} Taking inspiration from the excellent EECS16AB series at Berkeley,\footnote{\href{https://eecs16a.org}{eecs16a.org}}\footnote{\href{https://eecs16b.org}{eecs16b.org}} I intend to design and teach a new undergraduate course on applied cryptography that will be centered around both theory and implementation. My course will consist of standard lectures and sections, but homework assignments require students to get their hands dirty and directly implement (simplified versions of) relatively cryptographic protocols such as secret sharing, homomorphic encryption, and zero-knowledge proofs. Projects will require students to integrate these components and construct secure systems meeting certain privacy and integrity goals.  
+
+
+\item \emph{Graduate seminar on cryptographic proof systems:} I intend to design and teach a graduate course that would provide an applied lens on cryptographic proof systems, as a complement to existing courses that focus on the theory side. Starting from basic algebraic objects (finite fields, polynomials, and elliptic curves), my course would lead students through the various tools that underlie modern zkSNARKs, accompanying each module with an assignment to implement and experiment with these tools. For example, in a module focusing on polynomial commitment schemes (PC schemes), the corresponding assignment could involve implementing the KZG PC scheme \cite{KateZG10} and extending it to support batch evaluation proofs \cite{ChiesaHMMVW20,BonehDFG20}.
+\end{itemize}
+
+
+\section{Mentorship}
+\label{sec:mentorship}
+
+\parhead{Research mentoring} Across my research projects, I have had the pleasure of mentoring several excellent undergraduate students. For example, for the past two years I have mentored undergraduate Ryan Lehmkuhl on multiple research projects. This has culminated in multiple research papers at top security conferences, including a paper where Ryan was the primary author. He was also recently nominated as a finalist in the CRA Undergraduate Research Awards, and will be starting his PhD at MIT in Fall 2022.
+
+Ryan joined us on the \textsc{Delphi} secure inference research project \cite{MishraLSZP20}. He came in with a security background, and so I helped guide him through the theory behind our cryptographic protocol. I also helped him develop his system implementation skills by brainstorming implementation strategies for our machine learning and cryptographic components. His subsequent hard work was a core part of our submission, and earned him second-authorship on the resulting USENIX Security paper.
+
+In our next project, \textsc{Muse} \cite{LehmkuhlMSP21}, I decided to help Ryan solidify these skills by giving him the responsibility of leading the project. To smoothen his transition into this role, I slowly eased him into the responsibility of effectively structuring project meetings and assigning tasks to our coauthors. This strategy succeeded, as by the end of the project he was performing these tasks himself. I also helped him hone his paper writing and experiment design skills. He demonstrated these skills by earning first authorship on our USENIX Security paper. Furthermore, his implementation and evaluation efforts earned the paper an ``Artifact Evaluation'' badge asserting the quality of the implementation. 
+
+After having worked on two secure computation projects, Ryan expressed interest in working on a zkSNARKs. Since he did not have much experience with zkSNARKs, I provided him with readings and met with him one-on-one to help him develop his understanding of the subject. I then helped him onboard onto an ongoing research project about delegating zkSNARK provers, where he has contributed optimizations to our protocol, and has been responsible for the implementation and evaluation.
+
+The foregoing example illustrates the approach to mentorship that I have taken thus far: I start by determining the research interests of a student, and then match them with implementation-focused tasks arising from past or ongoing research projects. As they ramp up, I meet with them regularly to provide them with theoretical background and implementation advice. As they gain more experience, I slowly integrate them into the wider research project by involving them in paper writing, protocol development, and writing security proofs. Of course, each student has different interests and experience, and so as advisor I will adapt this strategy to account for these factors.
+
+\parhead{Community mentoring}
+I am also a part of a mentoring program for she256\footnote{\url{https://she256.org/}}, an organization focused on increasing participation of women in the blockchain space. As part of this program, for the past year I have been mentoring Krystal Maughan, a PhD student at the University of Vermont. Krystal and I initially met during my \arkworks{} tutorial, and were subsequently paired in the mentorship program. In this role, I have guided her through topics in zkSNARK research, and provided career advice, including on internships, research strategy, and choice of research field.
+
+\parhead{My approach}
+I aim to form a welcoming and inclusive research group. I will initially have weekly meetings with my graduate students, and will work with them to determine an advising style that would be a good fit for them. As they progress, I will aim to help them develop into independent researchers.
+
+\section{Community building}
+\label{sec:community}
+
+Over the course of my graduate studies, I have helped foster and develop a blossoming zkSNARK practitioner community. I have done this in two ways: by building an open-source community around \arkworks{}, and via pedagogical talks and lectures aimed at practitioners. As a professor, I intend to build on these efforts to expand the accessibility of zkSNARKs to as wide an audience as possible; I provide more details in my diversity statement.
+
+\parhead{\arkworks{} mentoring} 
+As the primary maintainer of the \arkworks{} ecosystem of zkSNARK libraries, I have helped create a community around the ecosystem, in the form of tutorials and community forums. In these forums, I have helped foster a welcoming environment by personally answering community members' zkSNARK-related questions, and by encouraging the members to do the same. This encouragement has helped community members build confidence in their zkSNARK skills, and has resulted in community-contributed tutorials, documentation, and code; indeed, \arkworks{} libraries have seen contributions from over 50 unique contributors with diverse backgrounds and varying amounts of zkSNARK experience in just the past 2 years.
+
+\parhead{Outreach via pedagogy}
+I have given numerous pedagogical talks on my research at the zkStudyClub,\footnote{For example, talks on PCD from \href{https://www.youtube.com/watch?v=-OXQW5MFDMY}{atomic accumulation} and from \href{https://www.youtube.com/watch?v=TRyep--q6jU}{split accumulation}.} a practitioner-oriented talk series, at various zkSummits,\footnote{For example, talks on \href{https://www.youtube.com/watch?v=bJDLf8KLdL0}{\marlin{}} and on \href{https://www.youtube.com/watch?v=zgSF_dRe4UY}{\arkworks{}}.} and at hackathons.\footnote{\url{https://www.youtube.com/watch?v=HXfZqm9DGLU}} I have also helped organize these hackathons\footnote{\url{https://zkhack.dev/}}, as well as tutorials relating to \arkworks{}.\footnote{\url{https://github.com/arkworks-rs/r1cs-tutorial} and \url{https://github.com/Pratyush/algebra-intro}.}
+
+{
+\renewcommand*{\bibfont}{\small}
+\printbibliography
+}
+
+
+\end{document}
