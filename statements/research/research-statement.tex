@@ -19,7 +19,7 @@
 
 
 \documentclass[11pt,letterpaper]{article}
-\usepackage[notes=true,later=false]{../dtrt}
+\usepackage[notes=xxx,later=false]{../dtrt}
 \usepackage[utf8]{inputenc}
 \usepackage[backend=biber,style=alphabetic,maxnames=22,maxalphanames=6]{biblatex}
 \usepackage[margin=0.8in]{geometry}
@@ -51,7 +51,7 @@
 
 
 
-\bibliography{../../academia/pubs,../title-long,../references}
+\bibliography{../title-long,../references}
 
 % \usepackage[scr=euler,frak=pxtx]{mathalfa}
 \usepackage{amsmath}
@@ -213,7 +213,7 @@ fit}
 
 % Declarations for Front Matter
 
-\title{Research Statement: Privacy and Scalability for Decentralized Systems}
+\title{Research Statement: Systems with Strong Privacy and Integrity Guarantees via Verifiable Computation}
 \author{Pratyush Mishra}
 \date{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -229,45 +229,82 @@ Cryptography provides powerful tools for reducing the trust required of service 
 For example, end-to-end-encryption with TLS or secure messaging systems has reduced the need to trust operators of internet infrastructure for privacy.
 
 Unfortunately, existing deployments of cryptography, while successful at providing strong privacy and integrity guarantees for data at rest, offer little protection for modern applications which need to \emph{compute} on such data.
-For example, current information retrieval systems reveal user queries to service providers.
-As another example, modern decentralized ledger systems (such as blockchains) reveal all transaction data publicly.
+On the other hand, the theory of cryptography has developed powerful tools (e.g., multi-party computation) for exactly this purpose, but these tools generally incur high overheads and hence have seen limited deployment.
 
-\parhead{My research}
-In my work, I have designed new cryptographic tools and systems that provide strong efficiency, privacy, and integrity guarantees for computations on data.
-My approach consists of three steps. 
-
-First, I investigate where existing systems fall short. For example, my work on \zexe{}, a system for decentralized private computation \cite{BoweCGMMW20}, started by investigating the limitations of existing decentralized ledger systems with respect to privacy (e.g., Ethereum) or programmability (e.g., Zcash \cite{ZCashCo}). 
-
-After identifying such shortcomings, I construct and implement novel cryptographic protocols that address these. My protocols and implementations are designed in a modular manner that simplifies security analysis while simultaneously enabling better optimization opportunities. This is exemplified by my work on \marlin{} \cite{ChiesaHMMVW20}, which provides a new modular methodology for constructing zkSNARKs (a kind of zero-knowledge proof) from simpler swappable components. Our work has enabled followup papers that provide new instantiations of these components to obtain security theorems for the resulting zkSNARKs essentially for free.
-
-Finally, I drive adoption of these protocols by implementing them in composable open-source libraries that efficiently realize the components necessary for many advanced cryptographic protocols. For example, I am a primary developer and maintainer of \arkworks{}, a Rust ecosystem of libraries for building zkSNARKs that sees regular contributions from academics and practitioners, and is used by numerous industrial and academic projects.
-
-These efforts have culminated in significant impact in industrial projects on decentralized ledger systems. For example, ideas from \zexe{} and \marlin{}, and code from \arkworks{} libraries, form crucial components of privacy-preserving and scalable blockchain systems \cite{mina-general, aleo, celo, anoma} that are undergoing deployment. (See \cref{sec:impact} for details).
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Tool: Scalable verifiable computation}
-\label{sec:took-zkp}
-
-\emph{Succinct zero-knowledge proofs}, or \emph{zkSNARKs}, are a powerful cryptographic tool that enable a prover to produce a short proof that convinces a verifier of the truth of a claim (e.g.: ``I know the preimage to this hash.''), while providing two properties. 
+\textbf{My research} aims to resolve the foregoing issue by designing systems with strong efficiency, privacy, and integrity guarantees for computations on data by focusing on one promising primitive: \emph{verifiable computation} (VC).
+Specifically, my work focuses on \emph{succinct zero-knowledge proofs}, or \emph{zkSNARKs}, a powerful form of verifiable computation that enables a prover to produce a short proof that convinces a verifier of the truth of a claim (e.g.: ``I know the preimage to this hash.''), while providing two properties. 
 The first, \emph{zero-knowledge}, ensures that the proof hides all information about \emph{why} the claim is true (e.g.: what the preimage is). 
 The second, \emph{succinctness}, ensures that the verifier's effort in checking the proof is much less than the cost of directly checking the claim (e.g.: directly computing the hash).
+
+My research approach consists of three steps. 
+
+First, I investigate where existing systems fall short.
+After identifying such shortcomings, I construct and implement novel cryptographic protocols that address these. I aim to design my protocols in a modular and reusable manner that simplifies security analysis while simultaneously enabling better optimization opportunities.
+Finally, I drive adoption of these protocols by implementing them in composable open-source libraries that efficiently realize the components necessary for many advanced cryptographic protocols.
+
+This approach has resulted in significant impact via industrial adoption of my research and widespread usage of my open-source libraries.
+
+In the rest of this document, I detail three thrusts of my research that follow the above approach.
+In \cref{sec:low-memory-proving}, I describe my work on constructing zkSNARKs that, unlike most prior constructions, impose very low memory requirements during proof generation, and hence enable even weak devices to generate proofs for large claims.
+Then, in \cref{sec:outsourcing}, I describe my work on enabling clients to outsource proof generation to powerful servers. This line of work complements the first by supporting computations that just cannot be performed on weak devices.
+Finally, in \cref{sec:applications}, I describe my work on applying zkSNARKs to design systems that provide strong privacy and integrity guarantees without compromising on efficiency.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Generating zkSNARKs in low memory environments}
+\label{sec:low-memory-proving}
 
 \parhead{Past work}
 During my PhD, I made fundamental contributions to the theory and practice of zkSNARKs \cite{ChiesaHMMVW20, BunzCMS20, BunzCLMS21, BunzMMTV21}.
 For example, my work on Marlin \cite{ChiesaHMMVW20} developed a novel methodology to construct zkSNARKs that underlies almost all modern zkSNARK constructions.
-As another example, my work on proofs for distributed computations \cite{BunzCMS20,BunzCLMS21} provides the most efficient zkSNARKs specialized for proving the correctness of distributed computations in an \emph{incremental} manner.
 
-Unfortunately, for all existing zkSNARKs, the time and memory costs of producing proofs are much higher than the respective costs of directly checking the claim.
-This precludes widespread use of zkSNARKs.
-To address this, my students and I have developed new techniques for \emph{outsourcing} proof generation to powerful servers,  
- both when privacy is required (to hide the prover's secret input), and when it is not.
- 
-\subsection{Outsourcing proof generation for zkSNARKs}
+Unfortunately, almost all known SNARKs require the prover to store a large amount of intermediate state in memory during proof generation, and hence are not suitable for weak devices.
+To resolve, this my students and I have developed new zkSNARK design and implementation techniques that enable low-memory proof generation.
+We have taken two complementary approaches: \emph{monolithic} low-memory zkSNARKs, and \emph{incremental} low-memory zkSNARKs.
+Monolithic zkSNARKs take as input the entire claim in one go, and produce a proof for it, while incremental zkSNARKs receive the claim in small chunks, and incrementally build up the proof.
+
+\parhead{Monolithic low-memory zkSNARKs}
+In recent work, we constructed Scribe (to be submitted to USENIX Security 2026), a low-memory SNARK that can efficiently prove large statements even on cheap consumer devices such as smartphones by leveraging a plentiful, but heretofore unutilized, resource: disk storage. 
+In more detail, instead of storing its (large) intermediate state in RAM, Scribe's prover instead stores it on disk. 
+To ensure that accesses to state are efficient, we designed Scribe's prover in a *read-write streaming* model of computation that allows the prover to read and modify its state only in a streaming manner.
+
+We implemented and evaluated Scribe's prover, and showed that, on commodity hardware, it can easily scale to claims of size $2^{28}$ gates while using only 2GB of memory and incurring minimal proving latency overhead (10-35\%) compared to the memory-intensive baseline that requires much more memory. 
+Our implementation minimizes overhead by leveraging the streaming access pattern to enable several systems optimizations that together mask I/O costs.
+
+In follow-up work (to be submitted to TCC 2026), we are exploring low-memory provers that eliminate the need for disk storage, while still achieving low prover time overhead.
+Our initial results in this regime indicate that we can get performance that is within 70\% of the memory-intensive baseline.
+We have also been able to develop lower bounds that show that (under reasonable restrictions), the protocols we have developed achieve optimal space-time tradeoffs.
+
+\parhead{Incremental low-memory zkSNARKs}
+Prior highly-efficient constructions of low-memory SNARKs for incremental computations \cite{BunzCLMS21,KothapalliST22} rely on homomorphic vector commitments whose security is based on public-key assumptions.
+This renders them vulnerable to quantum attacks, and also worsens their concrete efficiency.
+
+In recent work \cite{BunzMNW25} (ITCS 2025), my collaborators and I constructed the first efficient incremental low-memory SNARKs from *non-homomorphic* vector commitments which can be realized from solely symmetric-key assumptions (e.g. Merkle trees).
+We overcome the need for homomorphisms by instead performing spot-checks over error-correcting encodings of the committed vectors.
+
+Unfortunately, unlike prior incremental low-memory SNARKs, the efficiency of our construction degrades logarithmically with the number of computation steps. 
+In follow-up work Arc \cite{BunzMNW24} (submitted to CRYPTO 2025) we eliminate this degradation and obtain concretely efficient incremental low-memory SNARKs with plausible post-quantum security.
+Underlying Arc is a novel \emph{accumulation scheme} \cite{BunzCLMS21,KothapalliST22} for claims about proximity of claimed codewords to the Reed--Solomon code. 
+Unlike our prior work, this new scheme additionally supports accumulating claims up to list-decoding radius, resulting in concrete efficiency improvements.
+
+While Arc greatly improves upon our prior work, its prover still requires quasilinear time in the size of the claim (due to the Reed--Solomon encoding).
+My students and I have thus developed FACS \cite{BawejaMMS25} (submitted to CRYPTO 2025), a new accumulation scheme for claims about proximity of claimed codewords to \emph{linear-time} encodable codes.
+Unlike Arc, FACS' prover runs in linear time in the size of the claim.
+FACS relies on novel protocols for ``codeswitching'' tensor codes, and also develops a new notion of security that enables proofs of security for protocols that rely on linear-time encodable codes.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Outsourcing zkSNARK proof generation}
 \label{sec:outsourcing}
 
+In some cases, the proving device is simply too constrained (e.g., weak CPU) to generate proofs efficiently by itself.
+Indeed, such a case could arise when the low-memory solutions described in \cref{sec:low-memory-proving} result in high latency.
+I will now describe the protocols I have developed for handling such scenarios by outsourcing proof generation to powerful servers.
+My students and I have developed new techniques for \emph{outsourcing} proof generation to powerful servers, both when privacy is required (to hide the prover's secret input), and when it is not.
+ 
 \parhead{Privacy-preserving outsourcing}
 In Eos \cite{ChiesaLMZ23} (USENIX Security 2023), we designed the first privacy-preserving proof delegation protocols for zkSNARKs. 
 Eos' protocols enable a prover to outsource proof generation to a set of workers, so that if at least one worker does not collude with other workers, no private information is revealed to any worker. 
@@ -275,7 +312,7 @@ Eos' protocols enable a prover to outsource proof generation to a set of workers
 We implemented Eos' delegation protocols for a state-of-the-art zkSNARK, and 
 our evaluation demonstrated that these protocols are concretely efficient: when compared to local proving on a recent smartphone, Eos (a) reduces end-to-end latency by up to $26\times$, (b) lowers the delegator's active computation time by up to $1447\times$, and (c) enables proving up to $256\times$ larger instances.
 
-In follow-up work DFS \cite{HuMWXYZ24} (USENIX Security 2025), we extended Eos to additionally support \emph{distributed} proving within each worker. 
+In follow-up work DFS \cite{HuMWXYZ25} (USENIX Security 2025), we extended Eos to additionally support \emph{distributed} proving within each worker. 
 DFS co-designs the zkSNARK with the delegation protocol to maximize efficiency for distributed proving and minimize overhead for delegation.
 Concretely, unlike Eos, which requires linear communication between workers, DFS achieves zero communication and further achieves malicious security for free. 
 We again implemented and evaluated DFS, and demonstrated that it scales better than Eos and other prior work. For example, for moderately large claims, DFS' end-to-end communication is $\sim 10^6$ times smaller than Eos. 
@@ -294,153 +331,89 @@ We implemented a distributed prover for Hekaton, and evaluated its performance o
 We also extended DFS (mentioned above) to support distributed proving in this public outsourcing setting. Like Hekaton, DFS achieves strong horizontal scalability, while reducing overall compute and communication costs.
 Furthermore, DFS' proof size and verification time are much smaller than Hekaton's.
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Low-memory SNARKs}
-
-A second line of work that I have pursued is on \emph{low-memory} zkSNARKs where the prover's memory is much smaller than the size of the claim being proven.
-Here I have taken two complementary approaches: \emph{monolithic} low-memory zkSNARKs, and \emph{incremental} low-memory zkSNARKs.
-Monolithic zkSNARKs take as input the entire claim in one go, and produce a proof for it, while incremental zkSNARKs receive the claim in small chunks, and incrementally build up the proof.
-
-\parhead{Monolithic low-memory zkSNARKs}
-In recent work, we constructed Scribe (to be submitted to USENIX Security 2026), a low-memory SNARK that can efficiently prove large statements even on cheap consumer devices such as smartphones by leveraging a plentiful, but heretofore unutilized, resource: disk storage. 
-In more detail, instead of storing its (large) intermediate state in RAM, Scribe's prover instead stores it on disk. 
-To ensure that accesses to state are efficient, we designed Scribe's prover in a *read-write streaming* model of computation that allows the prover to read and modify its state only in a streaming manner.
-
-We implemented and evaluated Scribe's prover, and showed that, on commodity hardware, it can easily scale to claims of size $2^{28}$ gates while using only 2GB of memory and incurring minimal proving latency overhead (10-35\%) compared to the memory-intensive baseline (HyperPlonk [EUROCRYPT 2023]) that requires much more memory. 
-Our implementation minimizes overhead by leveraging the streaming access pattern to enable several systems optimizations that together mask I/O costs.
-
-In follow-up work (to be submitted to TCC 2026), we are exploring low-memory provers that eliminate the need for disk storage, while still achieving low prover time overhead.
-Our initial results in this regime indicate that we can get performance that is within 70\% of the memory-intensive baseline.
-We have also been able to develop lower bounds that show that (under reasonable restrictions), the protocols we have developed achieve optimal space-time tradeoffs.
-
-\parhead{Incremental low-memory zkSNARKs}
-
-
+\parhead{Future directions}
+Our existing protocols and systems leave room for improvement in a number of areas.
+On the private outsourcing front, we aim to design protocols that eliminate the need for multiple non-colluding workers, and instead only rely on a single \emph{untrusted} worker.
+On the public outsourcing front, we aim to design distributed proving algorithms for a popular efficient and plausibly-post-quantum class of SNARKs called \emph{hash-based SNARKs} \cite{BenSassonCS16} that offer numerous advantages (e.g., no trusted setup, fast provers, etc.)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Efficient integrity and privacy for centralized systems}
-\label{sec:centralized}
+\section{Using zkSNARKs to improve integrity and privacy of applications}
+\label{sec:applications}
 
-\parhead{Past work}
-During my PhD, I developed $\mathsf{Oblix}$ \cite{MishraPCCP18}, a novel encrypted search scheme that provides strong efficiency and privacy guarantees by provably hiding access patterns. $\mathsf{Oblix}$ relies on a combination of novel oblivious-access techniques and recent hardware enclave platforms (e.g., Intel SGX) \cite{McKeenABRSSS13}.
-We used $\mathsf{Oblix}$ to add privacy to a number of applications:
-private contact discovery for Signal, private retrieval of public keys for Key Transparency, and searchable encryption that hides access patterns and result sizes.
+\parhead{Prior work}
+During my PhD, my coauthors and I built $\zexe$ (\emph{Zero knowledge EXEcution}) \cite{BoweCGMMW20}, a ledger-based system for \emph{decentralized private computation} that enables users to execute computations offline and subsequently produce publicly-verifiable transactions that attest to the correctness of these offline executions. 
+$\zexe$ simultaneously provides privacy and succinctness for these executions: a transaction reveals \emph{no information} about the offline computation whose correctness it attests to, and, furthermore, can be validated in time that is \emph{independent} of the cost of the computation. 
+Overall, $\zexe$ transactions with two inputs and two outputs are $968$ bytes and can be verified in tens of milliseconds, \emph{regardless of the offline computation}, and generating these transactions takes less than a minute (plus a time that grows with the offline computation). 
 
-\subsection{Better integrity and efficiency for private retrieval}
-
-\pratyush{Mention downside: trusted hardware.}
-
-Since then, I have worked to improve the efficiency and integrity guarantees of a particular class of private search schemes: those where the data is publicly available, but client queries into it must be kept private.
-Such \emph{Private Information Retrieval} (PIR) schemes have found numerous applications recently, including private web search \cite{Tiptoe}, private DNS queries \cite{blah}, and private auditing for web certificates \cite{SimplePIR}.
-Unfortunately, existing PIR schemes suffer from two limitations: unrealistic trust assumptions that can compromise privacy, and poor efficiency.
-In recent and ongoing work, my students and I have developed new approaches to resolve these issues.
-
-\parhead{Integrity for private retrieval}
-Almost all known PIR schemes assume that the database server behaves honestly and does not deviate from its role in the PIR protocol.
-However, this assumption is unrealistic: 
-not only are attacks that leverage misbehaving servers possible to learn client queries easy to implement, but, for many applications (e.g., private web search) service providers are incentivized to carry out such attacks as they stand to profit from learning query contents.
-
-To rectify this, recent work has proposed \emph{maliciously-secure PIR} (mPIR) \cite{AuthenticatedPIR} that strengthens the guarantees of semi-honest PIR by ensuring that even a misbehaving server cannot compromise client privacy via selective-failure attacks, and must answer every client query with respect to the same database.
-However, existing mPIR schemes are only known from specific cryptographic assumptions, and incur higher communication costs than their semi-honest counterparts.
-
-In our recent work \cite{FalkMS24} (in submission to CRYPTO 2025), we developed a new \emph{compiler} that transforms \emph{any} single-server PIR scheme into an mPIR scheme in a black-box manner with minimal overhead with no additional assumptions.
-Instantiating our compiler with appropriate base PIR schemes gives the first constructions of mPIR under assumptions such as Decisional Composite Residuosity, Quadratic Residuosity, and $\phi$-hiding.
-Efficiency-wise, for a database of size $N$, our compiler yields mPIR schemes with $O(N^\varepsilon)$ communication and $O(1)$ computation overhead for arbitrarily small $\varepsilon < 1$.
-In fact, by applying our compiler to double-efficient PIR \cite{LinMW23}, we can even achieve \emph{doubly-efficient} mPIR which requires only $\textrm{polylog}(N)$ communication and server and client computation. 
-In comparison, all prior mPIR constructions incur at least $\Omega(\sqrt{N})$ cost in all these metrics.
-
-\parhead{Efficiency of private retrieval}
-A key bottleneck in PIR is the server computation required to answer a client query: in almost all known constructions, for a database of size $N$, the server must perform $O(N)$ public-key operations.
-Doubly-efficient PIR \cite{constructions} addresses this by reducing this cost to sublinear in the database size by allowing the server to \emph{preprocess} the database.
-Unfortunately, known constructions of doubly-efficient PIR are of primarily theoretical interest, as their asymptotic improvements are offset by humongous constant-factor overheads \cite{player}.
-
-In ongoing work, we construct the first concretely efficient doubly-efficient PIR scheme with (slightly) sublinear server computation of $O(N/\log N)$ and minimal preprocessing overhead.
-Our scheme relies on extending prior techniques for preprocessing matrix-vector products, and applying these in novel ways to construct our PIR schemes.
-
-\parhead{Integrity for databases queries}
-
-\parhead{Privacy and integrity for program compilation}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Scalability and privacy for decentralized systems}
-\label{sec:decentralized}
+Since then, my group and I have worked to provide similarly strong integrity and privacy guarantees for a number of other applications. We detail some below.
 
 
 
+\paragraph{Integrity for database queries.}
+Consider a smart contract that wishes to make queries into historical blockchain data.
+Owing to its limited resources, the smart contract cannot directly query the blockchain.
+It must thus rely on a third party to provide the query result, but then this requires trusting the third party to provide the correct result.
+This is an instance of the following general problem: a client wishes to query an external database, but wants strong integrity guarantees about the query results.
+
+In ongoing work, we design a new verifiable computation protocol that proves the correctness of SQL queries executed against a pre-committed database. 
+Our approach introduces a suite of specialized ``sub-SNARKs'' for different relational operators, and a composition framework that assembles these into a SNARK for the full query. 
+We also design new query optimization techniques whose objective is to reduce query \emph{proving} times instead of query \emph{execution} times.
+We design and implement both components, and preliminary benchmarks show that our prototype can prove moderately complex queries in tens of seconds on a commodity laptop, which is orders-of-magnitude faster than prior work \cite{ZhangGKPP17}.
+
+\paragraph{Privacy-preserving proofs of document contents.}
+Many applications require proving properties of structured data. 
+For instance, privacy-preserving credential systems often parse non-private credentials to prove selective attributes, such as age. 
+Existing state-of-the-art \cite{AngelIMSW24} only supports simple regex-based extraction techniques. This is often insufficient for the aforementioned applications, and so, in ongoing work, we develop protocols for parsing data encoded using context-free grammars, enabling richer and more expressive proofs over document contents. 
+Our initial implementation and evaluation demonstrates that proofs of parsing complex structured documents, such as JSON, can be generated in tens of seconds.
+
+\paragraph{Privacy-preserving proofs of program compilation.}
+A core tenet of computer security is to avoid executing untrusted binaries, which may behave maliciously. 
+However, this threat model changes if binaries are accompanied by short cryptographic proofs certifying their provenance and safety. 
+For example, a proof that a binary was compiled from a memory-safe source program eliminates an entire class of vulnerabilities. 
+In ongoing work, we develop techniques for proving that a binary is the result of correctly compiling source code in a subset of C to WebAssembly. 
+Our SNARK construction supports all stages of compilation, including parsing, optimization, and code generation. 
+To reduce proving costs, we rely on \emph{non-deterministic NP checkers}, which check correctness of each compiler stage's output rather than re-executing it. Implementation is ongoing.
 
 
+% \parhead{Past work}
+% During my PhD, I developed $\mathsf{Oblix}$ \cite{MishraPCCP18}, a novel encrypted search scheme that provides strong efficiency and privacy guarantees by provably hiding access patterns. $\mathsf{Oblix}$ relies on a combination of novel oblivious-access techniques and recent hardware enclave platforms (e.g., Intel SGX) \cite{McKeenABRSSS13}.
+% We used $\mathsf{Oblix}$ to add privacy to a number of applications:
+% private contact discovery for Signal, private retrieval of public keys for Key Transparency, and searchable encryption that hides access patterns and result sizes.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \parhead{Privacy-preserving micropayments}
-% In my first research project \cite{ChiesaLMMM17}, we set out to improve the scalability for a single decentralized application: private payments. While prior work like Zerocash \cite{BenSassonCGGMTV14} had already made significant strides towards achieving decentralized private payments, it inherited the efficiency limitations of the underlying ledger, making it unsuitable for everyday purchases.
+% \subsection{Better integrity and efficiency for private retrieval}
 
-% To resolve this, in \cite{ChiesaLMMM17}, we defined and built protocols for \emph{private probabilistic micropayments}, which enable parties to (mostly) bypass the ledger and conduct probabilistic micropayments \cite{Wheeler96,Rivest97} with one another, directly and privately. 
+% \pratyush{Mention downside: trusted hardware.}
 
-% Constructing a private probabilistic micropayments protocol requires solving two challenges:
-% preserving privacy of micropayments, and preventing double-spending without relying on network-wide synchronization mechanisms.
+% Since then, I have worked to improve the efficiency and integrity guarantees of a particular class of private search schemes: those where the data is publicly available, but client queries into it must be kept private.
+% Such \emph{Private Information Retrieval} (PIR) schemes have found numerous applications recently, including private web search \cite{Tiptoe}, private DNS queries \cite{blah}, and private auditing for web certificates \cite{SimplePIR}.
+% Unfortunately, existing PIR schemes suffer from two limitations: unrealistic trust assumptions that can compromise privacy, and poor efficiency.
+% In recent and ongoing work, my students and I have developed new approaches to resolve these issues.
 
-% On the privacy front, the issue is ensuring that nullpayments are unlinkable from each other; Since the same escrow is used across multiple probabilistic payments (to amortize fees), privacy of the customer is compromised because the merchant learns
-% \begin{inparaenum}[(1)]
-%   \item which (macro or null) payments to him were made with the same escrow; and
-%   \item which macropayments to other merchants were made with an escrow used for payments to him.
-% \end{inparaenum}
-% This breach of privacy worsens if merchants share information with one another. In sum, while the above natural approach achieves ``macropayment unlinkability'', \emph{micropayments are still linkable}, and thus customers have little privacy.
+% \parhead{Integrity for private retrieval}
+% Almost all known PIR schemes assume that the database server behaves honestly and does not deviate from its role in the PIR protocol.
+% However, this assumption is unrealistic: 
+% not only are attacks that leverage misbehaving servers possible to learn client queries easy to implement, but, for many applications (e.g., private web search) service providers are incentivized to carry out such attacks as they stand to profit from learning query contents.
+
+% To rectify this, recent work has proposed \emph{maliciously-secure PIR} (mPIR) \cite{AuthenticatedPIR} that strengthens the guarantees of semi-honest PIR by ensuring that even a misbehaving server cannot compromise client privacy via selective-failure attacks, and must answer every client query with respect to the same database.
+% However, existing mPIR schemes are only known from specific cryptographic assumptions, and incur higher communication costs than their semi-honest counterparts.
+
+% In our recent work \cite{FalkMS24} (in submission to CRYPTO 2025), we developed a new \emph{compiler} that transforms \emph{any} single-server PIR scheme into an mPIR scheme in a black-box manner with minimal overhead with no additional assumptions.
+% Instantiating our compiler with appropriate base PIR schemes gives the first constructions of mPIR under assumptions such as Decisional Composite Residuosity, Quadratic Residuosity, and $\phi$-hiding.
+% Efficiency-wise, for a database of size $N$, our compiler yields mPIR schemes with $O(N^\varepsilon)$ communication and $O(1)$ computation overhead for arbitrarily small $\varepsilon < 1$.
+% In fact, by applying our compiler to double-efficient PIR \cite{LinMW23}, we can even achieve \emph{doubly-efficient} mPIR which requires only $\textrm{polylog}(N)$ communication and server and client computation. 
+% In comparison, all prior mPIR constructions incur at least $\Omega(\sqrt{N})$ cost in all these metrics.
+
+% \parhead{Efficiency of private retrieval}
+% A key bottleneck in PIR is the server computation required to answer a client query: in almost all known constructions, for a database of size $N$, the server must perform $O(N)$ public-key operations.
+% Doubly-efficient PIR \cite{constructions} addresses this by reducing this cost to sublinear in the database size by allowing the server to \emph{preprocess} the database.
+% Unfortunately, known constructions of doubly-efficient PIR are of primarily theoretical interest, as their asymptotic improvements are offset by humongous constant-factor overheads \cite{player}.
+
+% In ongoing work, we construct the first concretely efficient doubly-efficient PIR scheme with (slightly) sublinear server computation of $O(N/\log N)$ and minimal preprocessing overhead.
+% Our scheme relies on extending prior techniques for preprocessing matrix-vector products, and applying these in novel ways to construct our PIR schemes.
 
 \pratyush{
-  Pitch
-  - improve scalability and privacy of decentralized systems
-  - reduce trust in centralized systems
-    - dbsnark
-    - coral
-    - weasel
-
-  - develop and apply cryptographic tools for this purpose
-  
-  Thrust 1: reducing trust, improving scalability and privacy (applications)
-  
-  Thrust 2: Scalable zkSNARKs
-  - outsourcing
-  - distributed proving
-  - low-memory SNARKs
-  - post-quantum SNARKs for distributed computations
-  
-  Thrust 3: 
-
-}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Privacy and scalability for decentralized ledger systems}
-\label{sec:dls}
-
-\emph{Succinct zero-knowledge proofs}, or \emph{zkSNARKs}, are a powerful cryptographic tool that enable a prover to produce a short proof that convinces a verifier of the truth of a claim (e.g.: ``I know the preimage to this hash.''), while providing two properties. The first, \emph{zero-knowledge}, ensures that the proof hides all information about \emph{why} the claim is true (e.g.: what the preimage is). The second, \emph{succinctness}, ensures that the verifier's effort in checking the proof is much less than the cost of directly checking the claim (e.g.: directly computing the hash).
-
-In this section, I will describe how I helped develop new constructions of zkSNARKs \cite{ChiesaHMMVW20, BunzCMS20, BunzCLMS21, BunzMMTV19} that achieve novel efficiency and scalability properties, and how I applied these to construct decentralized ledger systems that achieve strong privacy and scalability \cite{ChiesaGLMMM17, BoweCGMMW20}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\parhead{\zexe{}: Enabling decentralized private computation}
-In \cite{BoweCGMMW20}, I collaborated with my coauthors to design and build $\zexe$ (\emph{Zero knowledge EXEcution}), a ledger-based system for \emph{decentralized private computation} that enables users to execute computations offline and subsequently produce publicly-verifiable transactions that attest to the correctness of these offline executions. $\zexe$ simultaneously provides privacy and succinctness for these executions: a transaction reveals \emph{no information} about the offline computation whose correctness it attests to, and, furthermore, can be validated in time that is \emph{independent} of the cost of the computation. $\zexe$ further enables arbitrary user-defined applications to interact securely. To illustrate this, we used $\zexe$ to construct the \emph{first} privacy-preserving analogues of a number of popular decentralized applications, including private user-defined assets, private stablecoins, and private decentralized exchanges for exchanging these assets.
-
-A $\zexe$ transaction consists of input and output \emph{records} that store the data and computations associated with an application, and a zkSNARK that checks the validity of the (committed) input and output records and enforces correct execution of the associated computations. Our privacy and scalability goals place stringent requirements on this zkSNARK: it must achieve data and function privacy, small proof size, and efficient proving and verification. No existing zkSNARK simultaneously achieved all these properties, and so we designed new techniques for limited \emph{recursive composition of zkSNARKs} that enabled us to meet our efficiency goals. Overall, $\zexe$ transactions with two inputs and two outputs are $968$ bytes and can be verified in tens of milliseconds, \emph{regardless of the offline computation}, and generating these transactions takes less than a minute (plus a time that grows with the offline computation). 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\parhead{Proofs about distributed computations}
-\label{sec:intro-pcd}
-Many usecases in decentralized ledger systems require mutually distrustful parties to prove the correctness of a distributed computation. zkSNARKs are insufficient for this task, as they only enable a single party to prove correct a single step of the computation. This motivates \emph{proof-carrying data} (PCD) \cite{ChiesaT10}, a primitive that enables these parties to prove the correctness of the entire computation. Unfortunately, existing constructions of PCD \cite{ChiesaT10, BCCT12, BenSassonCTV17, ChiesaOS20} are concretely expensive due to their reliance on zkSNARKs with succinct verification. 
-
-In \cite{BunzCMS20}, we built on ideas introduced in \cite{BoweGH19} to provide the first PCD construction that does \emph{not} require zkSNARKs with succinct verification. To do so, we introduced a new cryptographic primitive called an \emph{atomic accumulation scheme}, and showed how to obtain PCD from zkSNARKs with such an accumulation scheme. We then constructed the latter by designing accumulation schemes for popular polynomial commitments, and showing that this suffices to construct accumulation schemes for the zkSNARKs of \cite{ChiesaHMMVW20}.
-
-While the foregoing PCD construction removes the need for succinct verification, it does not remove the need for succinct \emph{proof size}. This results in concretely expensive constructions that must rely on non-standard assumptions \cite{GentryW11}. In \cite{BunzCLMS21}, we eliminated this requirement and demonstrated the \emph{first} construction of PCD from \emph{non-succinct} arguments. We did so by generalizing atomic accumulation schemes into \emph{split accumulation schemes}, and then constructing PCD from arguments with split accumulation. We also provided efficient constructions of such argument systems from standard assumptions, which, when plugged into our PCD construction, lead to the most efficient PCD schemes to date.
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -472,6 +445,7 @@ As a result of these efforts, the \arkworks{} ecosystem  has attracted a vibrant
 
 \parhead{\textsc{Delphi} and \textsc{Muse}}
 We have also open-sourced our implementations of \textsc{Delphi}\footnote{\url{https://github.com/mc2-project/delphi/}} and \textsc{Muse}\footnote{\url{https://github.com/mc2-project/muse}}. The latter was awarded an artifact evaluation badge at USENIX Security 2022.
+}
 
 % \section{Future work}
 % \label{sec:future-work}
